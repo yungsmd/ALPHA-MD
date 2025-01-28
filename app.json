@@ -97,6 +97,11 @@
       "value": "keithkeizzah",
       "required": false
     },
+    "URL": {
+      "description": "Insert your bot url to display your image link ",
+      "value": "",
+      "required": false
+    },
     "AUTO_READ_MESSAGES": {
       "description": "yes toactivate no to deactivate",
       "value": "yes",
