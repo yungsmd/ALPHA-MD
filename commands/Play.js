@@ -1,10 +1,9 @@
-
 const { keith } = require("../keizzah/keith");
 const axios = require('axios');
 const ytSearch = require('yt-search');
 const conf = require(__dirname + '/../set');
 
-// Define the command with aliases
+// Define the command with aliases for play
 keith({
   nomCom: "play",
   aliases: ["song", "playdoc", "audio", "mp3"],
@@ -66,7 +65,7 @@ keith({
     const downloadUrl = downloadData.result.download_url;
     const videoDetails = downloadData.result;
 
-    // Prepare the message payload with external ad details for different formats
+    // Prepare the message payload with external ad details
     const messagePayloads = [
       {
         audio: { url: downloadUrl },
@@ -124,8 +123,9 @@ keith({
     console.error('Error during download process:', error);
     return repondre(`Download failed due to an error: ${error.message || error}`);
   }
-  
-  
+});
+
+// Define the command with aliases for video
 keith({
   nomCom: "video",
   aliases: ["videodoc", "film", "mp4"],
@@ -231,4 +231,3 @@ keith({
     return repondre(`Download failed due to an error: ${error.message || error}`);
   }
 });
-
