@@ -2,6 +2,7 @@
 const { keith } = require('../keizzah/keith');
 const axios = require('axios');
 const fs = require('fs-extra');
+const { mediafireDl } = require("../keizzah/dl/Function");
 const conf = require(__dirname + "/../set");
 
 
@@ -65,6 +66,68 @@ keith({
     repondre("APK download failed. Please try again later.");
   }
 });
+
+// GitHub Clone Downloader
+keith({
+  nomCom: "gitclone",
+  aliases: ["zip", "clone"],
+  categorie: "Download"
+}, async (dest, zk, context) => {
+  const { ms, repondre, arg } = context;
+  const githubLink = arg.join(" ");
+
+  // Check if the GitHub link is provided and valid
+  if (!githubLink) {
+    return repondre("Please provide a valid GitHub link.");
+  }
+
+  if (!githubLink.includes("github.com")) {
+    return repondre("Is that a GitHub repo link?");
+  }
+
+  // Extract owner and repo from the GitHub URL using a regex pattern
+  let [, owner, repo] = githubLink.match(/(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i) || [];
+  
+  // Check if owner and repo were extracted correctly
+  if (!owner || !repo) {
+    return repondre("Couldn't extract owner and repo from the provided link.");
+  }
+
+  // Remove the .git suffix from the repo name if present
+  repo = repo.replace(/.git$/, '');
+
+  // GitHub API URL for the zipball of the repo
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/zipball`;
+
+  try {
+    // Make a HEAD request to get the file metadata
+    const response = await axios.head(apiUrl);
+    const fileName = response.headers["content-disposition"].match(/attachment; filename=(.*)/)[1];
+
+    // Send the zip file link as a document
+    await zk.sendMessage(dest, {
+      document: { url: apiUrl },
+      fileName: `${fileName}.zip`,
+      mimetype: "application/zip",
+      caption: `*Downloaded by ${conf.BOT}*`,
+      contextInfo: {
+        externalAdReply: {
+          title: `${conf.BOT} GIT CLONE`,
+          body: conf.OWNER_NAME,
+          thumbnailUrl: conf.URL,
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true
+        }
+      }
+    }, { quoted: ms });
+  } catch (error) {
+    // Handle error if the repository cannot be fetched
+    console.error(error);
+    repondre("Error fetching GitHub repository.");
+  }
+});
+
 
 
 
