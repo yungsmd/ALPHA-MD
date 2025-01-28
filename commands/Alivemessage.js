@@ -1,4 +1,6 @@
+
 const { keith } = require('../keizzah/keith');
+const conf = require(__dirname + "/../set");
 
 keith({
   nomCom: "test",
@@ -31,10 +33,6 @@ keith({
   // Randomly pick an audio file from the list
   const selectedAudio = audioFiles[Math.floor(Math.random() * audioFiles.length)];
 
-  // External URLs for references
-  const murl = 'https://whatsapp.com/channel/0029Vaan9TF9Bb62l8wpoD47';
-  const img = 'https://i.imgur.com/vTs9acV.jpeg';
-
   // Audio message object
   const audioMessage = {
     audio: {
@@ -47,9 +45,9 @@ keith({
     contextInfo: {
       externalAdReply: {
         title: '𝗜 𝗔𝗠 𝗔𝗟𝗜𝗩𝗘 𝗠𝗢𝗧𝗛𝗘𝗥𝗙𝗨𝗖𝗞𝗘𝗥',
-        body: 'Regards Keithkeizzah',
-        thumbnailUrl: img,
-        sourceUrl: murl,
+        body: conf.OWNER_NAME,
+        thumbnailUrl: conf.URL,
+        sourceUrl: conf.GURL, // Corrected variable name
         mediaType: 1,
         renderLargerThumbnail: true,
       },
