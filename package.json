@@ -141,6 +141,7 @@
     "url": "^0.11.4",
     "url-regex-safe": "^3.0.0",
     "undici": "^6.19.4",
+   "unlimited-ai": "^6.0.0",
     "uuid": "^9.0.1",
     "translatte": "^3.0.1",
     "types": "^0.1.1",
