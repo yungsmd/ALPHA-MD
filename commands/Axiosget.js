@@ -438,7 +438,6 @@ You can use this email for temporary purposes. I will notify you if you receive 
     }, { quoted: messageQuote });
   }
 });
-
 keith({
   nomCom: "wiki",
   aliases: ["wikipedia", "wikipeda"],
@@ -468,24 +467,12 @@ keith({
 
 🔗 *URL*: ${con.content_urls.mobile.page}
 
-> Powered by ${conf.BOT}
+> Powered by Alpha Md
     `;
-    await zk.sendMessage(dest, {
-      text: texa,
-      contextInfo: {
-        externalAdReply: {
-          title: "Wikipedia Summary",
-          body: `Here's a summary of your search term: ${text}`,
-          sourceUrl: conf.GURL,
-          mediaType: 1,
-          showAdAttribution: true
-        }
-      }
-    }, { quoted: ms });
+    repondre(texa);
   } catch (err) {
     console.error(err);
     repondre(`Got 404. I did not find anything!`);
   }
 });
-
 
