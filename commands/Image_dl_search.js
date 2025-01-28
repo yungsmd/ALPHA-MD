@@ -86,4 +86,37 @@ keith({
     sendMessage("Error occurred while retrieving data: " + error.message);
   }
 });
+keith({
+  nomCom: "waifu",
+  categorie: "images",
+  reaction: "🙄"
+}, async (origineMessage, zk, commandeOptions) => {
+  const { repondre, ms } = commandeOptions;
+  const url = 'https://api.waifu.pics/nsfw/waifu'; // Replace with your actual URL
+
+  try {
+    for (let i = 0; i < 5; i++) {
+      const response = await axios.get(url);
+      const imageUrl = response.data.url;
+
+      await zk.sendMessage(origineMessage, {
+        image: { url: imageUrl },
+        caption: `*Downloaded by ${conf.BOT}*`,
+        contextInfo: {
+          externalAdReply: {
+            title: "Image Search Result",
+            body: `Here's a great image related to: waifu`,
+            thumbnailUrl: imageUrl,
+            sourceUrl: conf.GURL,
+            mediaType: 1,
+            showAdAttribution: true
+          }
+        }
+      }, { quoted: ms });
+    }
+  } catch (error) {
+    repondre('Error retrieving data: ' + error.message);
+  }
+});
+
 
