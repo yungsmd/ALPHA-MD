@@ -2,7 +2,7 @@
 const { keith } = require('../keizzah/keith');
 const axios = require('axios');
 const conf = require(__dirname + "/../set");
-
+const { dare, truth, random_question, amount_of_questions } = require('../database/truth-dare.js');
 keith({
   nomCom: "advice",
   aliases: ["wisdom", "wise"],
@@ -105,3 +105,117 @@ keith({
     }, { quoted: messageQuote });
   }
 });
+
+
+keith({
+  nomCom: "question",
+  categorie: "fun",
+  reaction: "👄"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms } = commandeOptions;
+  try {
+    // Respond with a random question
+    await zk.sendMessage(dest, {
+      text: random_question(),
+      contextInfo: {
+        externalAdReply: {
+          title: "Random Question",
+          body: "Here's a fun random question for you to ponder!",
+          thumbnailUrl: conf.URL,
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true
+        }
+      }
+    }, { quoted: ms });
+  } catch (error) {
+    console.error("Error while handling 'question' command:", error);
+    await repondre("Sorry, something went wrong.");
+  }
+});
+
+// Command for truth
+keith({
+  nomCom: "truth",
+  categorie: "fun",
+  reaction: "👄"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms } = commandeOptions;
+  try {
+    // Respond with a truth question
+    await zk.sendMessage(dest, {
+      text: truth(),
+      contextInfo: {
+        externalAdReply: {
+          title: "Truth Question",
+          body: "Here's a truth question to test your honesty!",
+          thumbnailUrl: conf.URL,
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true
+        }
+      }
+    }, { quoted: ms });
+  } catch (error) {
+    console.error("Error while handling 'truth' command:", error);
+    await repondre("Sorry, something went wrong.");
+  }
+});
+
+// Command for dare
+keith({
+  nomCom: "dare",
+  categorie: "fun",
+  reaction: "👄"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms } = commandeOptions;
+  try {
+    // Respond with a dare
+    await zk.sendMessage(dest, {
+      text: dare(),
+      contextInfo: {
+        externalAdReply: {
+          title: "Dare Challenge",
+          body: "Here's a dare to challenge your bravery!",
+          thumbnailUrl: conf.URL,
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true
+        }
+      }
+    }, { quoted: ms });
+  } catch (error) {
+    console.error("Error while handling 'dare' command:", error);
+    await repondre("Sorry, something went wrong.");
+  }
+});
+
+// Command for amount of questions
+keith({
+  nomCom: "amountquiz",
+  categorie: "fun",
+  reaction: "👄"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms } = commandeOptions;
+  try {
+    // Call amount_of_questions with the desired type, defaulting to 0 (all questions)
+    const totalQuestions = amount_of_questions(0);  // Change 0 to 1 or 2 depending on the desired category
+    await zk.sendMessage(dest, {
+      text: `${totalQuestions}`,
+      contextInfo: {
+        externalAdReply: {
+          title: "Question Count",
+          body: "Here's the total number of questions available!",
+          thumbnailUrl: conf.URL,
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true
+        }
+      }
+    }, { quoted: ms });
+  } catch (error) {
+    console.error("Error while handling 'amountquiz' command:", error);
+    await repondre("Sorry, something went wrong.");
+  }
+});
+
