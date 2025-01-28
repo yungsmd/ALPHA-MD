@@ -86,7 +86,6 @@ const {
   isGroupBanned,
   removeGroupFromBanList
 } = require("./bdd/banGroup");
-const { antispamFunctions} = require("./bdd/antispam");
 const {
   isGroupOnlyAdmin,
   addGroupToOnlyAdminList,
