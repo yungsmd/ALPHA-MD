@@ -215,12 +215,12 @@ keith({
   }
 });
 keith({
-  nomCom: "waifu",
+  nomCom: "megumin",
   categorie: "images",
   reaction: "🙄"
 }, async (origineMessage, zk, commandeOptions) => {
   const { repondre, ms } = commandeOptions;
-  const url = 'https://api.waifu.pics/nsfw/waifu'; // Replace with your actual URL
+  const url = 'https://api.waifu.pics/nsfw/megumin'; // Replace with your actual URL
 
   try {
     for (let i = 0; i < 5; i++) {
