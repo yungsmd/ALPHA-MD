@@ -32,7 +32,7 @@ keith({
     for (let i = 0; i < Math.min(results.length, 5); i++) {
       zk.sendMessage(dest, {
         image: { url: results[i].url },
-        caption: `Downloaded by ${conf.BOT}`,
+        caption: `*Downloaded by ${conf.BOT}*`,
         contextInfo: {
           externalAdReply: {
             title: "Image Search Result",
