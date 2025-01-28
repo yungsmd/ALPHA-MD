@@ -138,7 +138,7 @@ keith({ nomCom: "menu", aliases: ["liste", "helplist", "commandlist"], categorie
 
 *${randomQuote}*
 
-╭━━━ 〔 ${settings.BOT} 〕━━━┈⊷
+╭━━━ 〔 *${settings.BOT}* 〕━━━┈⊷
 ┃✵╭──────────────
 ┃✵│▸ *ʙᴏᴛ ᴏᴡɴᴇʀ:* ${settings.OWNER_NAME}
 ┃✵│▸ *ᴘʀᴇғɪx:* *[ ${settings.PREFIXE} ]*
@@ -155,7 +155,6 @@ keith({ nomCom: "menu", aliases: ["liste", "helplist", "commandlist"], categorie
 
 *${randomQuote}*
 
-> 𝐏𝐎𝐖𝐄𝐑𝐄𝐃 𝐁𝐘 𝐊𝐄𝐈𝐓𝐇
 `;
 
     let commandsList = "*𝐀𝐕𝐀𝐈𝐋𝐀𝐁𝐋𝐄 𝐂𝐎𝐌𝐌𝐀𝐍𝐃𝐒*\n";
