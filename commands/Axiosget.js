@@ -1,6 +1,7 @@
 
 const { keith } = require('../keizzah/keith');
 const axios = require('axios');
+const wiki = require('wikipedia');
 const conf = require(__dirname + "/../set");
 
 keith({
@@ -437,6 +438,58 @@ You can use this email for temporary purposes. I will notify you if you receive 
     }, { quoted: messageQuote });
   }
 });
+
+keith({
+  nomCom: "wiki",
+  aliases: ["wikipedia", "wikipeda"],
+  reaction: '⚔️',
+  categorie: "search"
+}, async (zk, dest, context) => {
+  const { repondre, arg, ms } = context;
+
+  // Ensure that the search term is provided
+  const text = arg.join(" ").trim(); 
+
+  try {
+    if (!text) return repondre(`Provide the term to search,\nE.g What is JavaScript!`);
+    
+    // Fetch summary from Wikipedia
+    const con = await wiki.summary(text);
+    const thumbnailUrl = con.originalimage ? con.originalimage.source : conf.URL; // Extracting the thumbnail URL
+    
+    // Format the reply message
+    const texa = `
+*📚 Wikipedia Summary 📚*
+
+🔍 *Title*: _${con.title}_
+
+📝 *Description*: _${con.description}_
+
+💬 *Summary*: _${con.extract}_
+
+🔗 *URL*: ${con.content_urls.mobile.page}
+
+> Powered by ${conf.BOT}
+    `;
+    await zk.sendMessage(dest, {
+      text: texa,
+      contextInfo: {
+        externalAdReply: {
+          title: "Wikipedia Summary",
+          body: `Here's a summary of your search term: ${text}`,
+          thumbnailUrl: thumbnailUrl,
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true
+        }
+      }
+    }, { quoted: ms });
+  } catch (err) {
+    console.error(err);
+    repondre(`Got 404. I did not find anything!`);
+  }
+});
+
 
 
 
