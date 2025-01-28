@@ -455,7 +455,6 @@ keith({
     
     // Fetch summary from Wikipedia
     const con = await wiki.summary(text);
-    const thumbnailUrl = con.originalimage ? con.originalimage.source : conf.URL; // Extracting the thumbnail URL
     
     // Format the reply message
     const texa = `
@@ -477,7 +476,6 @@ keith({
         externalAdReply: {
           title: "Wikipedia Summary",
           body: `Here's a summary of your search term: ${text}`,
-          thumbnailUrl: thumbnailUrl,
           sourceUrl: conf.GURL,
           mediaType: 1,
           showAdAttribution: true
@@ -491,9 +489,3 @@ keith({
 });
 
 
-
-
-
-
-
-  
