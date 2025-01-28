@@ -124,4 +124,52 @@ keith({
   }
 });
 
+keith({
+  nomCom: "define",
+  aliases: ["dictionary", "dict", "def"],
+  reaction: '😁',
+  categorie: "Search"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, arg, ms } = commandeOptions;
+  const term = arg.join(" ");
+
+  if (!term) {
+    return repondre("Please provide a term to define.");
+  }
+
+  try {
+    const { data } = await axios.get(`http://api.urbandictionary.com/v0/define?term=${term}`);
+    const definition = data.list[0];
+
+    if (definition) {
+      const definitionMessage = `
+        Word: ${term}
+        Definition: ${definition.definition.replace(/\[|\]/g, '')}
+        Example: ${definition.example.replace(/\[|\]/g, '')}
+      `;
+
+      await zk.sendMessage(dest, {
+        text: definitionMessage,
+        contextInfo: {
+          externalAdReply: {
+            title: "ALPHA-MD DICTIONARY",
+            body: `Definition of ${term}`,
+            mediaType: 1,
+            thumbnailUrl: "https://files.catbox.moe/28j7yx.jpg", 
+            sourceUrl: conf.GURL,
+            showAdAttribution: true, 
+          },
+        },
+      }, { quoted: ms });
+
+    } else {
+      return repondre(`No result found for "${term}".`);
+    }
+  } catch (error) {
+    console.error(error);
+    return repondre("An error occurred while fetching the definition.");
+  }
+});
+
+
   
