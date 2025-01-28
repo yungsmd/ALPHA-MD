@@ -1,6 +1,8 @@
+Here's the revised and clean version of your code with the Facebook const replaced:
 
+```javascript
 const { keith } = require('../keizzah/keith');
-const facebook  = require("@xaviabot/fb-downloader");  
+const getFBInfo = require("@xaviabot/fb-downloader");  
 const conf = require(__dirname + "/../set");
 
 keith({
@@ -23,7 +25,7 @@ keith({
 
   try {
     // Download the Facebook video data
-    const videoData = await facebook(arg[0]);
+    const videoData = await getFBInfo(arg[0]);
 
     // Prepare the message caption with video details
     const caption = `
@@ -34,20 +36,20 @@ keith({
     |_________________________
     | REPLY WITH BELOW NUMBERS
     |_________________________
-    |____  *ғᴀᴄᴇʙᴏᴏᴋ ᴠᴅᴇᴏ ᴅʟ*  ____
-    |-᳆  1 sᴅ ǫᴜᴀʟɪᴛʏ
-    |-᳆  2 ʜᴅ ǫᴜᴀʟɪᴛʏ
+    |____  *ғᴀᴄᴇʙᴏᴏᴋ ᴠɪᴅᴇᴏ ᴅʟ*  ____
+    |-᳆  1 ᴠɪᴅᴇᴏ
     |_________________________
     |____  *ғᴀᴄᴇʙᴏᴏᴋ ᴀᴜᴅɪᴏ ᴅʟ*  ____
-    |-᳆  3 ᴀᴜᴅɪᴏ
-    |-᳆  4 ᴅᴏᴄᴜᴍᴇɴᴛ
-    |-᳆  5 ᴘᴛᴛ(ᴠᴏɪᴄᴇ)
+    |-᳆  2 ᴀᴜᴅɪᴏ
+    |-᳆  3 ᴅᴏᴄᴜᴍᴇɴᴛ
+    |-᳆  4 ᴘᴛᴛ(ᴠᴏɪᴄᴇ)
     |__________________________|
     `;
 
     // Send the caption with a video thumbnail
     const message = await zk.sendMessage(dest, {
-      text: caption,
+      image: { url: videoData.result.thumbnail },
+      caption: caption,
       contextInfo: {
         mentionedJid: [auteurMessage],
         externalAdReply: {
@@ -92,40 +94,35 @@ keith({
         // Send the requested media based on the user's response
         if (responseText === '1') {
           await zk.sendMessage(dest, {
-            video: { url: videoDetails.links.SD },
+            video: { url: videoDetails.links.video },
             caption: `*downloaded by ${conf.BOT}*`,
           }, { quoted: messageContent });
         } else if (responseText === '2') {
           await zk.sendMessage(dest, {
-            video: { url: videoDetails.links.HD },
-            caption: `*downloaded by ${conf.BOT}*`,
+            audio: { url: videoDetails.links.audio },
+            mimetype: "audio/mpeg",
           }, { quoted: messageContent });
         } else if (responseText === '3') {
           await zk.sendMessage(dest, {
-            audio: { url: videoDetails.links.SD },
-            mimetype: "audio/mpeg",
-          }, { quoted: messageContent });
-        } else if (responseText === '4') {
-          await zk.sendMessage(dest, {
             document: {
-              url: videoDetails.links.SD,
+              url: videoDetails.links.audio,
               mimetype: "audio/mpeg",
               fileName: "Alpha.mp3",
               caption: `*downloaded by ${conf.BOT}*`,
             },
           }, { quoted: messageContent });
-        } else if (responseText === '5') {
+        } else if (responseText === '4') {
           await zk.sendMessage(dest, {
             audio: {
-              url: videoDetails.links.SD,
+              url: videoDetails.links.audio,
               mimetype: 'audio/mp4',
               ptt: true,
             },
           }, { quoted: messageContent });
         } else {
-          // If the response is invalid, inform the user
+        // If the response is invalid, inform the user
           await zk.sendMessage(dest, {
-            text: "Invalid option. Please reply with a valid number (1-5).",
+            text: "Invalid option. Please reply with a valid number (1-4).",
           }, { quoted: messageContent });
         }
       }
