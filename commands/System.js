@@ -272,7 +272,7 @@ keith(
 
     // Send the ping results with the updated text and format
     await zk.sendMessage(dest, {
-      text: `speed is ${formattedResults.join(', ')}`,
+      text: `${formattedResults.join(', ')}`,
       contextInfo: {
         externalAdReply: {
           title: conf.BOT,
