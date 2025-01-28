@@ -74,12 +74,6 @@ keith({
     repondre(`Error: ${error.message || 'Something went wrong.'}`);
   }
 });
-Sure! Here's the corrected and clean version of your code with the requested adjustments:
-
-```javascript
-const { keith } = require('../keizzah/keith');
-const axios = require("axios");
-const conf = require(__dirname + '/../set');
 
 keith({
   nomCom: "twittersearch",
