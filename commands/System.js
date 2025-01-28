@@ -268,7 +268,7 @@ keith(
     const pingResults = Array.from({ length: 3 }, () => Math.floor(Math.random() * 10000 + 1000));
 
     // Create larger font for ping results (using special characters for a bigger look)
-    const formattedResults = pingResults.map(ping => `${conf.OWNER_NAME}  ${ping} 𝐌/𝐒  `);
+    const formattedResults = pingResults.map(ping => `${conf.OWNER_NAME} 𝖘𝖕𝖊𝖊𝖉 ${ping} 𝐌/𝐒  `);
 
     // Send the ping results with the updated text and format
     await zk.sendMessage(dest, {
