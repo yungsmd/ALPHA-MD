@@ -207,3 +207,102 @@ keith({
 });
 
 
+keith({
+  nomCom: "code",
+  aliases: ["session", "pair", "paircode", "qrcode"],
+  reaction: '🚀',
+  categorie: 'system'
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, arg, ms } = commandeOptions;
+
+  if (!arg || arg.length === 0) {
+    const replyText = "Example Usage: .code 2541111xxxxx.";
+    return repondre(replyText, {
+      contextInfo: {
+        externalAdReply: {
+          title: "Pairing Code",
+          body: replyText,
+          thumbnailUrl: conf.URL, // Using configured thumbnail URL
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true,
+        }
+      }
+    });
+  }
+
+  try {
+    // Notify user that pairing is in progress
+    const replyText = "*Wait Alpha Md is getting your pair code 💧✅...*";
+    await repondre(replyText, {
+      contextInfo: {
+        externalAdReply: {
+          title: "Pairing Code",
+          body: replyText,
+          thumbnailUrl: conf.URL, // Using configured thumbnail URL
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true,
+        }
+      }
+    });
+
+    // Prepare the API request
+    const encodedNumber = encodeURIComponent(arg.join(" "));
+    const apiUrl = `https://keith-sessions-pi5z.onrender.com/code?number=${encodedNumber}`;
+
+    // Fetch the pairing code from the API
+    const response = await axios.get(apiUrl);
+    const data = response.data;
+
+    if (data && data.code) {
+      const pairingCode = data.code;
+      const replyText = `Here is your pairing code: ${pairingCode}`;
+      await repondre(replyText, {
+        contextInfo: {
+          externalAdReply: {
+            title: "Pairing Code",
+            body: replyText,
+            thumbnailUrl: conf.URL, // Using configured thumbnail URL
+            sourceUrl: conf.GURL,
+            mediaType: 1,
+            showAdAttribution: true,
+          }
+        }
+      });
+      const secondReplyText = "Here is your pair code, copy and paste it to the notification above or link devices.";
+      await repondre(secondReplyText, {
+        contextInfo: {
+          externalAdReply: {
+            title: "Pairing Code",
+            body: secondReplyText,
+            thumbnailUrl: conf.URL, // Using configured thumbnail URL
+            sourceUrl: conf.GURL,
+            mediaType: 1,
+            showAdAttribution: true,
+          }
+        }
+      });
+    } else {
+      throw new Error("Invalid response from API.");
+    }
+  } catch (error) {
+    console.error("Error getting API response:", error.message);
+    const replyText = "Error getting response from API.";
+    await repondre(replyText, {
+      contextInfo: {
+        externalAdReply: {
+          title: "API Error",
+          body: replyText,
+          thumbnailUrl: conf.URL, // Using configured thumbnail URL
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true,
+        }
+      }
+    });
+  }
+});
+
+
+
