@@ -3,7 +3,7 @@ const { keith } = require(__dirname + "/../keizzah/keith");
 const { format } = require(__dirname + "/../keizzah/mesfonctions");
 const os = require('os');
 const moment = require("moment-timezone");
-const settings = require(__dirname + "/../set");
+const conf = require(__dirname + "/../set");
 
 const readMore = String.fromCharCode(8206).repeat(4001);
 
@@ -37,15 +37,15 @@ const fetchGitHubStats = async () => {
 };
 
 keith({
-    nomCom: "repo1",
+    nomCom: "repo",
     aliases: ["script", "sc"],
     reaction: '⚪',
     nomFichier: __filename
 }, async (command, reply, context) => {
-    const { repondre, auteurMessage } = context;
+    const { repondre, auteurMessage, nomAuteurMessage } = context;
 
     try {
-        const response = await axios.get("https://api.github.com/repos/Keithkeizzah/ALPHA-MD1");
+        const response = await axios.get("https://api.github.com/repos/Keithkeizzah/ALPHA-MD");
         const repoData = response.data;
 
         if (repoData) {
@@ -59,25 +59,27 @@ keith({
 
             const releaseDate = new Date(repoData.created_at).toLocaleDateString('en-GB');
             const message = `
-            *Hello ,,,👋This is 𝐀𝐋𝐏𝐇𝐀-𝐌𝐃*
-            the best bot in the universe developed by Kᴇɪᴛʜ Kᴇɪᴢᴢᴀʜ,,fork and give a star 🌟 to my repo
+            *Hello 👋 ${nomAuteurMessage}*
+
+            *This is ${conf.BOT}*
+            the best bot in the universe developed by ${conf.OWNER_NAME}. Fork and give a star 🌟 to my repo!
      ╭────────────────
      │✞  *Stars:* - ${repoInfo.stars}
      │✞  *Forks:* - ${repoInfo.forks}
      │✞  *Release date:* - ${releaseDate}
      │✞  *Repo:* - ${repoData.html_url}
-     │✞  *Owner:*   *keithkeizzah*
-     ╰─────────────────── `;
+     │✞  *Owner:*   *${conf.OWNER_NAME}*
+     ╰───────────────────`;
 
             await reply.sendMessage(command, {
                 text: message,
                 contextInfo: {
                     mentionedJid: [auteurMessage],
                     externalAdReply: {
-                        title: "✨𝗔𝗟𝗣𝗛𝗔-𝗠𝗗🌟",
-                        body: "POWERED BY KEITH",
-                        thumbnailUrl: "https://i.imgur.com/q7nH7wI.jpeg",
-                        sourceUrl: "https://whatsapp.com/channel/0029Vaan9TF9Bb62l8wpoD47",
+                        title: conf.BOT,
+                        body: conf.OWNER_NAME,
+                        thumbnailUrl: conf.URL,
+                        sourceUrl: conf.GURL, // Fixed typo from 'cof.GURL' to 'conf.GURL'
                         mediaType: 1,
                         renderLargerThumbnail: true
                     }
