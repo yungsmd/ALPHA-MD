@@ -1,3 +1,4 @@
+
 const { keith } = require('../keizzah/keith');
 const axios = require('axios');
 const conf = require(__dirname + "/../set");
@@ -18,8 +19,8 @@ keith({
     await zk.sendMessage(dest, {
       text: `Here is your advice: ${advice} 😊`,
       externalAdReply: {
-        title: "Your Temporary Email Session Has Ended",
-        body: "Your temporary email session has expired. Need another one? Just ask!",
+        title: "Daily Dose of Advice",
+        body: "Here’s a little nugget of wisdom to brighten your day!",
         thumbnailUrl: conf.URL,
         sourceUrl: conf.GURL,
         mediaType: 1,
@@ -31,8 +32,15 @@ keith({
     await replyToUser("Oops, an error occurred while processing your request.");
   }
 });
+```
 
-// Command for generating a trivia question
+*Trivia Command*
+
+```javascript
+const { keith } = require('../keizzah/keith');
+const axios = require('axios');
+const conf = require(__dirname + "/../set");
+
 keith({
   nomCom: "trivia",
   reaction: '🤔',
@@ -58,8 +66,8 @@ keith({
     await zk.sendMessage(dest, {
       text: `Here's a trivia question for you: \n\n${question}\n\n${answerChoices}\n\nI will send the correct answer in 10 seconds...`,
       externalAdReply: {
-        title: "Your Temporary Email Session Has Ended",
-        body: "Your temporary email session has expired. Need another one? Just ask!",
+        title: "Trivia Time!",
+        body: "Challenge yourself with this fun trivia question!",
         thumbnailUrl: conf.URL,
         sourceUrl: conf.GURL,
         mediaType: 1,
@@ -72,8 +80,8 @@ keith({
       await zk.sendMessage(dest, {
         text: `The correct answer is: ${correctAnswer}`,
         externalAdReply: {
-          title: "Your Temporary Email Session Has Ended",
-          body: "Your temporary email session has expired. Need another one? Just ask!",
+          title: "Trivia Answer Revealed",
+          body: "Did you get it right? Try another trivia question!",
           thumbnailUrl: conf.URL,
           sourceUrl: conf.GURL,
           mediaType: 1,
@@ -87,8 +95,8 @@ keith({
     await zk.sendMessage(dest, {
       text: "Error getting trivia. Please try again later.",
       externalAdReply: {
-        title: "Your Temporary Email Session Has Ended",
-        body: "Your temporary email session has expired. Need another one? Just ask!",
+        title: "Trivia Error",
+        body: "There was an error retrieving the trivia question. Please try again.",
         thumbnailUrl: conf.URL,
         sourceUrl: conf.GURL,
         mediaType: 1,
