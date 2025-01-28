@@ -219,3 +219,88 @@ keith({
   }
 });
 
+keith({
+  nomCom: "fact",
+  reaction: '✌️',
+  categorie: "Fun"
+}, async (dest, zk, context) => {
+  const { repondre: respond, arg, ms } = context;
+
+  try {
+    const response = await axios.get("https://nekos.life/api/v2/fact");
+    const data = response.data;
+    const factMessage = `
+┏━━━━ *ALPHA-FACT* ━━━━━◆                     
+┃
+┃   *◇* ${data.fact} 
+┃
+┃   *◇* Regards *ALPHA MD*
+┃      
+ ╭────────────────◆
+ │ *_Powered by keithkeizzah._*
+ ╰─────────────────◆
+    `;
+
+    await zk.sendMessage(dest, {
+      text: factMessage,
+      contextInfo: {
+        externalAdReply: {
+          title: "Fun Fact",
+          body: "Here's a fun fact to enlighten your day!",
+          thumbnailUrl: conf.URL,
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true
+        }
+      }
+    }, { quoted: ms });
+  } catch (error) {
+    console.error(error);
+    await respond("An error occurred while fetching the fact.");
+  }
+});
+
+keith({
+  nomCom: "quotes",
+  reaction: '🗿',
+  categorie: "Fun"
+}, async (dest, zk, context) => {
+  const { repondre: respond, arg, ms } = context;
+
+  try {
+    const response = await axios.get("https://favqs.com/api/qotd");
+    const data = response.data;
+    const quoteMessage = `
+┏━━━━━QUOTE━━━━━━◆
+┃   *◇* _${data.quote.body}_
+┃  
+┃   *◇* *AUTHOR:* ${data.quote.author}
+┃      
+┃    *◇*  *regards ALPHA MD*
+┃    
+╭────────────────◆
+│ *_Powered by keithkeizzah._*
+╰─────────────────◆
+    `;
+
+    await zk.sendMessage(dest, {
+      text: quoteMessage,
+      contextInfo: {
+        externalAdReply: {
+          title: "Daily Quote",
+          body: "Here's an inspiring quote to motivate you!",
+          thumbnailUrl: conf.URL,
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true
+        }
+      }
+    }, { quoted: ms });
+  } catch (error) {
+    console.error(error);
+    await respond("An error occurred while fetching the quote.");
+  }
+});
+
+
+
