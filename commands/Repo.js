@@ -37,7 +37,7 @@ const fetchGitHubStats = async () => {
 };
 
 keith({
-    nomCom: "repo",
+    nomCom: "repo1",
     aliases: ["script", "sc"],
     reaction: '⚪',
     nomFichier: __filename
