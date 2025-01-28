@@ -36,14 +36,14 @@ keith({
       return repondre("Unable to find the download link for this app.");
     }
 
-    const thumb = appDetails.BK9.thumbnail; // Assuming the API returns a 'thumbnail' property
+    const thumb = appDetails.BK9.thumbnail || conf.URL; // Fallback to conf.URL if thumbnail is not provided
 
     // Send the APK file to the group with thumbnail
     await client.sendMessage(groupId, {
       document: { url: appDetails.BK9.dllink },
       fileName: `${appDetails.BK9.name}.apk`,
       mimetype: "application/vnd.android.package-archive",
-      caption: "Downloaded by ${conf.OWNER_NAME}",
+      caption: `Downloaded by ${conf.OWNER_NAME}`,
       contextInfo: {
         externalAdReply: {
           mediaUrl: thumb,
