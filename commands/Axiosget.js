@@ -124,3 +124,86 @@ keith({
   }
 });
 
+keith({
+  nomCom: "define",
+  aliases: ["dictionary", "dict", "def"],
+  reaction: '😁',
+  categorie: "Search"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, arg, ms } = commandeOptions;
+  const term = arg.join(" ");
+
+  if (!term) {
+    const replyText = "Please provide a term to define.";
+    return repondre(replyText, {
+      contextInfo: {
+        externalAdReply: {
+          title: "Term Definition Required",
+          body: replyText,
+          thumbnailUrl: conf.URL, // Using configured thumbnail URL
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true,
+        }
+      }
+    });
+  }
+
+  try {
+    const { data } = await axios.get(`http://api.urbandictionary.com/v0/define?term=${term}`);
+    const definition = data.list[0];
+
+    if (definition) {
+      const definitionMessage = `
+        Word: ${term}
+        Definition: ${definition.definition.replace(/\[|\]/g, '')}
+        Example: ${definition.example.replace(/\[|\]/g, '')}
+      `;
+
+      const replyText = `Word: ${term}\nDefinition: ${definition.definition.replace(/\[|\]/g, '')}\nExample: ${definition.example.replace(/\[|\]/g, '')}`;
+      return repondre(replyText, {
+        contextInfo: {
+          externalAdReply: {
+            title: `Definition of ${term}`,
+            body: replyText,
+            thumbnailUrl: conf.URL, // Using configured thumbnail URL
+            sourceUrl: conf.GURL,
+            mediaType: 1,
+            showAdAttribution: true,
+          }
+        }
+      });
+    } else {
+      const replyText = `No result found for "${term}".`;
+      return repondre(replyText, {
+        contextInfo: {
+          externalAdReply: {
+            title: "No Results Found",
+            body: replyText,
+            thumbnailUrl: conf.URL, // Using configured thumbnail URL
+            sourceUrl: conf.GURL,
+            mediaType: 1,
+            showAdAttribution: true,
+          }
+        }
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    const replyText = "An error occurred while fetching the definition.";
+    return repondre(replyText, {
+      contextInfo: {
+        externalAdReply: {
+          title: "Error Fetching Definition",
+          body: replyText,
+          thumbnailUrl: conf.URL, // Using configured thumbnail URL
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true,
+        }
+      }
+    });
+  }
+});
+
+
