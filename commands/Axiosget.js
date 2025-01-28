@@ -35,23 +35,47 @@ keith({
     await repondre("Sorry, there was an error retrieving the news. Please try again later.\n" + error);
   }
 });
+
+
 keith({
   nomCom: "bible",
   reaction: '🎎',
-  categorie: "General"
+  categorie: "search"
 }, async (dest, zk, commandeOptions) => {
   const { repondre, arg, ms } = commandeOptions;
   const reference = arg.join(" ");
   
   if (!reference) {
-    return repondre("Please specify the book, chapter, and verse you want to read. Example: bible john 3:16");
+    return repondre("Please specify the book, chapter, and verse you want to read. Example: bible john 3:16", {
+      contextInfo: {
+        externalAdReply: {
+          title: "Bible Reference Required",
+          body: "Please provide a book, chapter, and verse.",
+          thumbnailUrl: "https://files.catbox.moe/zt9ie6.jpg", // Replace with a suitable thumbnail URL
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true,
+        },
+      },
+    });
   }
   
   try {
     const response = await axios.get(`https://bible-api.com/${reference}`);
     
     if (!response.data) {
-      return repondre("Invalid reference. Example: bible john 3:16");
+      return repondre("Invalid reference. Example: bible john 3:16", {
+        contextInfo: {
+          externalAdReply: {
+            title: "Invalid Bible Reference",
+            body: "Please provide a valid book, chapter, and verse.",
+            thumbnailUrl: "https://files.catbox.moe/zt9ie6.jpg", // Replace with a suitable thumbnail URL
+            sourceUrl: conf.GURL,
+            mediaType: 1,
+            showAdAttribution: true,
+          },
+        },
+      });
     }
     
     const data = response.data;
@@ -66,7 +90,7 @@ keith({
 
 ⧭ *_LANGUAGE:_* ${data.translation_name}
 ╭────────────────◆
-│ *_Powered by keithkeizzah._*
+│ *_Powered by ${conf.OWNER_NAME}*
 ╰─────────────────◆ `;
     
     await zk.sendMessage(dest, {
@@ -85,8 +109,22 @@ keith({
     
   } catch (error) {
     console.error("Error fetching Bible passage:", error);
-    await repondre("An error occurred while fetching the Bible passage. Please try again later.");
+    await repondre("An error occurred while fetching the Bible passage. Please try again later.", {
+      contextInfo: {
+        externalAdReply: {
+          title: "Error Fetching Bible Passage",
+          body: "Please try again later.",
+          thumbnailUrl: "https://files.catbox.moe/zt9ie6.jpg", // Replace with a suitable thumbnail URL
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true,
+        },
+      },
+    });
   }
 });
+
+
+
 
  
