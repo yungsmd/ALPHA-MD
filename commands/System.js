@@ -2,6 +2,7 @@
 const { keith } = require('../keizzah/keith');
 const Heroku = require('heroku-client');
 const s = require("../set");
+const { exec } = require("child_process");
 const conf = require(__dirname + "/../set");
 
 keith({
@@ -177,3 +178,43 @@ keith({
     await repondre(`❌ There was an error setting the variable. Please try again later.\n${error.message}`);
   }
 });
+
+keith({
+  nomCom: "shell",
+  aliases: ["getcmd", "cmd"],
+  reaction: '⚔️',
+  categorie: "system"
+}, async (context, message, params) => {
+  const { repondre: sendResponse, arg: commandArgs, superUser: Owner, auteurMessage } = params;
+
+  // Ensure that the sender is the superuser (Owner)
+  if (!Owner) {
+    return sendResponse("You are not authorized to execute shell commands.");
+  }
+
+  const command = commandArgs.join(" ").trim();
+
+  // Ensure the command is not empty
+  if (!command) {
+    return sendResponse("Please provide a valid shell command.");
+  }
+
+  // Execute the shell command
+  exec(command, (err, stdout, stderr) => {
+    if (err) {
+      return sendResponse(`Error: ${err.message}`);
+    }
+
+    if (stderr) {
+      return sendResponse(`stderr: ${stderr}`);
+    }
+
+    if (stdout) {
+      return sendResponse(stdout);
+    }
+
+    // If there's no output, let the user know
+    return sendResponse("Command executed successfully, but no output was returned.");
+  });
+});
+
