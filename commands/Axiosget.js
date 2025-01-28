@@ -225,6 +225,62 @@ keith({
   }
 });
 
+keith({
+  nomCom: "element",
+  reaction: '📓',
+  categorie: "search"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, arg, ms } = commandeOptions;
+  const elementQuery = arg.join(" ").trim();
+
+  if (!elementQuery) {
+    return repondre("Please provide an element symbol or name.");
+  }
+
+  try {
+    const response = await axios.get(`https://api.popcat.xyz/periodic-table?element=${elementQuery}`);
+    
+    if (!response.data) {
+      return repondre("Could not find information for the provided element. Please check the symbol or name.");
+    }
+
+    const data = response.data;
+    const thumb = data.image; // Assuming the API returns an 'image' property for the element thumbnail
+
+    const formattedMessage = `
+*Alpha Md Element Information:*
+🚀 *Name:* ${data.name}
+🚀 *Symbol:* ${data.symbol}
+🚀 *Atomic Number:* ${data.atomic_number}
+🚀 *Atomic Mass:* ${data.atomic_mass}
+🚀 *Period:* ${data.period}
+🚀 *Phase:* ${data.phase}
+🚀 *Discovered By:* ${data.discovered_by}
+🚀 *Summary:* ${data.summary}
+   
+Regards ${conf.BOT} `;
+
+    await zk.sendMessage(dest, {
+      text: formattedMessage,
+      contextInfo: {
+        externalAdReply: {
+          title: "ALPHA-MD ELEMENT INFORMATION",
+          body: "Here is the information you requested:",
+          mediaType: 1,
+          thumbnailUrl: thumb,
+          sourceUrl: conf.GURL,
+          showAdAttribution: true, 
+        },
+      },
+    }, { quoted: ms });
+
+  } catch (error) {
+    console.error("Error fetching the element data:", error);
+    repondre("An error occurred while fetching the element data. Please try again later.");
+  }
+});
+
+
 
 
   
