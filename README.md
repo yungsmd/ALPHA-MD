@@ -26,7 +26,7 @@
 
   
 
-<a href="https://github.com/keithkeizzah/ALPHA-MD1/fork"><img src="https://img.shields.io/badge/CLICK%20HERE-purple" alt="FORK ALPHA" width="150"></a>
+<a href="https://github.com/keithkeizzah/ALPHA-MD/fork"><img src="https://img.shields.io/badge/CLICK%20HERE-purple" alt="FORK ALPHA" width="150"></a>
 
 
 <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
@@ -50,7 +50,7 @@
 **𝗛𝗢𝗦𝗧 𝗢𝗡 𝗗𝗜𝗦𝗖𝗢𝗥𝗗**
 <details>
 <summary>CLICK FOR MORE</summary>
-<a href="https://github.com/keithkeizzah/KEITH-MD2/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/DOWNLOAD%20FILES-yellow" alt="Rainhost Files" width="150"></a>
+<a href="https://github.com/keithkeizzah/KEITH-MD/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/DOWNLOAD%20FILES-yellow" alt="Rainhost Files" width="150"></a>
   
 <a href="https://bot-hosting.net/?aff=1259151615210819614"><img src="https://img.shields.io/badge/SIGNUP%20&%20DEPLOY-gold" alt="Scalingo Deploy" width="150"></a>
 </details
@@ -82,9 +82,9 @@
    <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 
 ### 𝗧𝗛𝗔𝗡𝗞𝗦 𝗧𝗢 𝗠𝗬 𝗟𝗢𝗩𝗘𝗟𝗬 𝗙𝗔𝗡𝗦
-[![Stargazers repo roster for @Keithkeizzah/ALPHA-MD1](http://reporoster.com/stars/dark/Keithkeizzah/ALPHA-MD1)](https://github.com/Keithkeizzah/ALPHA-MD1/stargazers)
+[![Stargazers repo roster for @Keithkeizzah/ALPHA-MD](http://reporoster.com/stars/dark/Keithkeizzah/ALPHA-MD1)](https://github.com/Keithkeizzah/ALPHA-MD/stargazers)
      
-[![Forkers repo roster for @Keithkeizzah/ALPHA-MD1](http://reporoster.com/forks/dark/Keithkeizzah/ALPHA-MD1)](https://github.com/Keithkeizzah/ALPHA-MD1/network/members)
+[![Forkers repo roster for @Keithkeizzah/ALPHA-MD](http://reporoster.com/forks/dark/Keithkeizzah/ALPHA-MD1)](https://github.com/Keithkeizzah/ALPHA-MD/network/members)
 
 Enjoy the diverse features of 𝐀𝐋𝐏𝐇𝐀-𝐌𝐃  to enhance your Whatsapp more enjoyable
 
