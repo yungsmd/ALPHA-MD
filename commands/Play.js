@@ -1,11 +1,13 @@
+
 const { keith } = require("../keizzah/keith");
 const axios = require('axios');
 const ytSearch = require('yt-search');
+const conf = require(__dirname + '/../set');
 
 // Define the command with aliases
 keith({
   nomCom: "play",
-  aliases: ["song", "ytmp3", "audio", "mp3"],
+  aliases: ["song", "playdoc", "audio", "mp3"],
   categorie: "Search",
   reaction: "🎥"
 }, async (dest, zk, commandOptions) => {
@@ -64,28 +66,61 @@ keith({
     const downloadUrl = downloadData.result.download_url;
     const videoDetails = downloadData.result;
 
-    // Prepare the message payload with external ad details
-    const messagePayload = {
-      audio: { url: downloadUrl },
-      mimetype: 'audio/mp4',
-      contextInfo: {
-        externalAdReply: {
-          title: videoDetails.title,
-          body: videoDetails.title,
-          mediaType: 1,
-          sourceUrl: 'https://whatsapp.com/channel/0029Vaan9TF9Bb62l8wpoD47',
-          thumbnailUrl: firstVideo.thumbnail,
-          renderLargerThumbnail: false,
-          showAdAttribution: true,
+    // Prepare the message payload with external ad details for different formats
+    const messagePayloads = [
+      {
+        audio: { url: downloadUrl },
+        mimetype: 'audio/mp4',
+        contextInfo: {
+          externalAdReply: {
+            title: videoDetails.title,
+            body: videoDetails.title,
+            mediaType: 1,
+            sourceUrl: conf.GURL,
+            thumbnailUrl: firstVideo.thumbnail,
+            renderLargerThumbnail: false,
+            showAdAttribution: true,
+          },
         },
       },
-    };
+      {
+        document: { url: downloadUrl },
+        mimetype: 'audio/mpeg',
+        contextInfo: {
+          externalAdReply: {
+            title: videoDetails.title,
+            body: videoDetails.title,
+            mediaType: 1,
+            sourceUrl: conf.GURL,
+            thumbnailUrl: firstVideo.thumbnail,
+            renderLargerThumbnail: false,
+            showAdAttribution: true,
+          },
+        },
+      },
+      {
+        document: { url: downloadUrl },
+        mimetype: 'audio/mp4',
+        contextInfo: {
+          externalAdReply: {
+            title: videoDetails.title,
+            body: videoDetails.title,
+            mediaType: 1,
+            sourceUrl: conf.GURL,
+            thumbnailUrl: firstVideo.thumbnail,
+            renderLargerThumbnail: false,
+            showAdAttribution: true,
+          },
+        },
+      }
+    ];
 
-    // Send the download link to the user
-    await zk.sendMessage(dest, messagePayload, { quoted: ms });
+    // Send the download link to the user for each payload
+    for (const messagePayload of messagePayloads) {
+      await zk.sendMessage(dest, messagePayload, { quoted: ms });
+    }
 
   } catch (error) {
     console.error('Error during download process:', error);
     return repondre(`Download failed due to an error: ${error.message || error}`);
   }
-});
