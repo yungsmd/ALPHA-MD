@@ -14,17 +14,19 @@ keith({
     // Get advice from the API using axios
     const response = await axios.get("https://api.adviceslip.com/advice");
     const advice = response.data.slip.advice;
-    
+
     // Send the advice with ad reply
     await zk.sendMessage(dest, {
       text: `Here is your advice: ${advice} 😊`,
-      externalAdReply: {
-        title: "Daily Dose of Advice",
-        body: "Here’s a little nugget of wisdom to brighten your day!",
-        thumbnailUrl: conf.URL,
-        sourceUrl: conf.GURL,
-        mediaType: 1,
-        showAdAttribution: true
+      contextInfo: {
+        externalAdReply: {
+          title: "Daily Dose of Advice",
+          body: "Here’s a little nugget of wisdom to brighten your day!",
+          thumbnailUrl: conf.URL,
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true
+        }
       }
     }, { quoted: messageQuote });
   } catch (error) {
@@ -32,14 +34,6 @@ keith({
     await replyToUser("Oops, an error occurred while processing your request.");
   }
 });
-```
-
-*Trivia Command*
-
-```javascript
-const { keith } = require('../keizzah/keith');
-const axios = require('axios');
-const conf = require(__dirname + "/../set");
 
 keith({
   nomCom: "trivia",
@@ -65,13 +59,15 @@ keith({
     // Send trivia question with answer choices
     await zk.sendMessage(dest, {
       text: `Here's a trivia question for you: \n\n${question}\n\n${answerChoices}\n\nI will send the correct answer in 10 seconds...`,
-      externalAdReply: {
-        title: "Trivia Time!",
-        body: "Challenge yourself with this fun trivia question!",
-        thumbnailUrl: conf.URL,
-        sourceUrl: conf.GURL,
-        mediaType: 1,
-        showAdAttribution: true
+      contextInfo: {
+        externalAdReply: {
+          title: "Trivia Time!",
+          body: "Challenge yourself with this fun trivia question!",
+          thumbnailUrl: conf.URL,
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true
+        }
       }
     }, { quoted: messageQuote });
 
@@ -79,13 +75,15 @@ keith({
     setTimeout(async () => {
       await zk.sendMessage(dest, {
         text: `The correct answer is: ${correctAnswer}`,
-        externalAdReply: {
-          title: "Trivia Answer Revealed",
-          body: "Did you get it right? Try another trivia question!",
-          thumbnailUrl: conf.URL,
-          sourceUrl: conf.GURL,
-          mediaType: 1,
-          showAdAttribution: true
+        contextInfo: {
+          externalAdReply: {
+            title: "Trivia Answer Revealed",
+            body: "Did you get it right? Try another trivia question!",
+            thumbnailUrl: conf.URL,
+            sourceUrl: conf.GURL,
+            mediaType: 1,
+            showAdAttribution: true
+          }
         }
       }, { quoted: messageQuote });
     }, 10000); // Delay for 10 seconds
@@ -94,13 +92,15 @@ keith({
     console.error("Error getting trivia:", error.message);
     await zk.sendMessage(dest, {
       text: "Error getting trivia. Please try again later.",
-      externalAdReply: {
-        title: "Trivia Error",
-        body: "There was an error retrieving the trivia question. Please try again.",
-        thumbnailUrl: conf.URL,
-        sourceUrl: conf.GURL,
-        mediaType: 1,
-        showAdAttribution: true
+      contextInfo: {
+        externalAdReply: {
+          title: "Trivia Error",
+          body: "There was an error retrieving the trivia question. Please try again.",
+          thumbnailUrl: conf.URL,
+          sourceUrl: conf.GURL,
+          mediaType: 1,
+          showAdAttribution: true
+        }
       }
     }, { quoted: messageQuote });
   }
