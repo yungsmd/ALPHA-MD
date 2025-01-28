@@ -7,22 +7,25 @@ const databasePath = path.join(__dirname, './database.db');
 const DATABASE_URL = process.env.DATABASE_URL === undefined
     ? databasePath
     : process.env.DATABASE_URL;
-module.exports = { session: process.env.SESSION_ID || '',
-    PREFIXE: process.env.PREFIX || "",
+module.exports = { session: process.env.SESSION_ID || 'keith',
+    PREFIXE: process.env.PREFIX || "+",
     GITHUB : process.env.GITHUB|| 'https://github.com/Keithkeizzah/ALPHA-MD',
     OWNER_NAME : process.env.OWNER_NAME || "Keith",
     NUMERO_OWNER : process.env.NUMERO_OWNER || "254748387615",  
-    GCF : process.env.GROUP_CONTROL || "yes",
-    GREET : process.env.GREET || "yes",
+              
     AUTO_READ_STATUS: process.env.AUTO_READ_STATUS || "non",
     AUTO_DOWNLOAD_STATUS: process.env.AUTO_DOWNLOAD_STATUS || 'non',
-    AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || 'viewed by alpha md',
-    AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || 'yes',
-    AUTO_REACT: process.env.AUTO_REACTION || "yes",  
-    AUTO_LIKE_STATUS: process.env.AUTO_LIKE_STATUS || 'yes',                          
+    AUTO_REACT: process.env.AUTO_REACTION || "non",  
+    AUTO_LIKE_STATUS: process.env.AUTO_LIKE_STATUS || 'non',              
+    CHATBOT: process.env.CHAT_BOT || "off",              
     AUTO_READ_MESSAGES: process.env.AUTO_READ_MESSAGES || "yes",
-    AUTO_BLOCK: process.env.AUTO_BLOCK || 'no',
-    AUTOBIO: process.env.AUTOBIO || 'yes',              
+    AUTO_BLOCK: process.env.AUTO_BLOCK || 'no', 
+    GCF: process.env.GROUP_CONTROL || 'no', 
+    GREET : process.env.GREET || "no", 
+    AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || 'viewed by alpha md',   
+    AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || 'no',
+    AUTOBIO: process.env.AUTOBIO || 'yes',       
+    ANTICALL_MSG : process.env.ANTICALL_MESSAGE || '',             
     GURL: process.env.GURL  || "https://whatsapp.com/channel/0029Vaan9TF9Bb62l8wpoD47",
     WEBSITE :process.env.GURL || "https://whatsapp.com/channel/0029Vaan9TF9Bb62l8wpoD47",
     CAPTION : process.env.CAPTION || "ALPHA-MD",
@@ -34,19 +37,28 @@ module.exports = { session: process.env.SESSION_ID || '',
     HEROKU_APP_NAME : process.env.HEROKU_APP_NAME || null,
     HEROKU_API_KEY : process.env.HEROKU_API_KEY || null,
     WARN_COUNT : process.env.WARN_COUNT || '3' ,
-    ANTICALL_MSG : process.env.ANTICALL_MESSAGE || 'THIS IS ALPHA MD.I DECLINE THIS CALL BECAUSE MY OWNER IS BUSY' ,              
-    ETAT : process.env.PRESENCE || '',
-    GEMINI_API_KEY : process.env.GEMINI_API_KEY || 'AIzaSyCcZqDMBa8FcAdBxqE1o6YYvzlygmpBx14',
+    ETAT : process.env.PRESENCE || '1',
     DP : process.env.STARTING_BOT_MESSAGE || "yes",
-    ANTIDELETE : process.env.ANTIDELETE || "yes",               
     ADM : process.env.ANTI_DELETE_MESSAGE || 'no',
     ANTICALL: process.env.ANTICALL || 'yes',              
-    CHAT_BOT : process.env.CHAT_BOT || 'no',  
     DATABASE_URL,
     DATABASE: DATABASE_URL === databasePath
-        ? "postgresql://flashmd_user:JlUe2Vs0UuBGh0sXz7rxONTeXSOra9XP@dpg-cqbd04tumphs73d2706g-a/flashmd"
-        : "postgresql://flashmd_user:JlUe2Vs0UuBGh0sXz7rxONTeXSOra9XP@dpg-cqbd04tumphs73d2706g-a/flashmd",
-    W_M: null, // Add this line
+        ? "postgres://db_7xp9_user:6hwmTN7rGPNsjlBEHyX49CXwrG7cDeYi@dpg-cj7ldu5jeehc73b2p7g0-a.oregon-postgres.render.com/db_7xp9" : "postgres://db_7xp9_user:6hwmTN7rGPNsjlBEHyX49CXwrG7cDeYi@dpg-cj7ldu5jeehc73b2p7g0-a.oregon-postgres.render.com/db_7xp9",
+    /* new Sequelize({
+     dialect: 'sqlite',
+     storage: DATABASE_URL,
+     logging: false,
+})
+: new Sequelize(DATABASE_URL, {
+     dialect: 'postgres',
+     ssl: true,
+     protocol: 'postgres',
+     dialectOptions: {
+         native: true,
+         ssl: { require: true, rejectUnauthorized: false },
+     },
+     logging: false,
+}),*/
 };
 let fichier = require.resolve(__filename);
 fs.watchFile(fichier, () => {
@@ -55,3 +67,4 @@ fs.watchFile(fichier, () => {
     delete require.cache[fichier];
     require(fichier);
 });
+￼Enter
