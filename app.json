@@ -1,3 +1,4 @@
+
 {
   "name": "ALPHA-MD",
   "description": "developed by keith..",
@@ -9,7 +10,7 @@
   ],
   "logo": "https://telegra.ph/file/b148f6ed21fa02ac5325b.jpg",
   "repository": "https://github.com/Keithkeizzah/ALPHA-MD",
-  "succes_url": "/",
+  "success_url": "/",
   "stack": "container",
   "env": {
     "PREFIX": {
@@ -25,11 +26,7 @@
     "AUTO_LIKE_STATUS": {
       "description": "Your contact status will be read automatically(type yes to active or no to deactive  ; don't write in capital letter)",
       "value": "yes",
-   },
-    "AUTO_READ_STATUS": {
-      "description": "Your contact status will be read automatically(type yes to active or no to deactive  ; don't write in capital letter)",
-      "value": "yes",
-      "required": false   "required": false  
+      "required": false
     },
     "AUTO_BLOCK": {
       "description": "Turn this 'on' if you want the bot to automatically block ANYONE WHO SENDS YOU A MESSAGE. Use 'off' to disable it.",
@@ -37,72 +34,72 @@
       "required": false  
     },
     "AUTO_DOWNLOAD_STATUS": {
-      "description": "Your contact status will be download automatically and send to you(type yes to active or no to deactive ; don't write in capital letter)",
+      "description": "Your contact status will be downloaded automatically and sent to you(type yes to activate or no to deactivate ; don't write in capital letter)",
       "value": "no",
       "required": false
     },
     "PM_PERMIT": {
-      "description": "Other user can't use your bot in pm (type yes to active or no to deactive ; don't write in capital letter)",
+      "description": "Other users can't use your bot in PM (type yes to activate or no to deactivate ; don't write in capital letter)",
       "value": "no",
       "required": false
     },
     "BOT_NAME": {
-      "description": "put A name for your bot",
+      "description": "put a name for your bot",
       "value": "ALPHA-MD",
       "required": false
     },
     "BOT_MENU_LINKS": {
-      "description": "add one or many link for your bot menu  ; eg : url1,url2,url3.....",
-      "value":"",
+      "description": "add one or many links for your bot menu  ; eg : url1,url2,url3.....",
+      "value": "",
       "required": false
     },
     "PUBLIC_MODE": {
-      "description": "type yes to put your bot on public mode or no to put it on private mod",
+      "description": "type yes to put your bot on public mode or no to put it on private mode",
       "value": "yes",
       "required": false 
     },
     "AUTO_STATUS_REPLY": {
-      "description": "Type yes if you want bot to reply to status",
+      "description": "Type yes if you want the bot to reply to statuses",
       "value": "yes",
       "required": false 
     },
     "AUTO_STATUS_MSG": {
-      "description": "type yes to put your bot on public mode or no to put it on private mod",
+      "description": "type yes to put your bot on public mode or no to put it on private mode",
       "value": "yes",
       "required": false 
     },
     "HEROKU_API_KEY": {
       "description": "insert your heroku api-key (OPTIONAL)",
-      "value" : "", 
+      "value": "", 
       "required": false
     },
     "HEROKU_APP_NAME": {
       "description": "insert your heroku APP NAME (OPTIONAL)",
-      "value" : "", 
+      "value": "", 
       "required": false
     },
     "SESSION_ID": {
-      "description": "put your session ID , the code you receive after scanning Qr code",
+      "description": "put your session ID, the code you receive after scanning QR code",
       "value": "",
       "required": true
     },
     "OWNER_NAME": {
-      "desc": "Your Name",
+      "description": "Your Name",
       "required": false,
       "value": "keithkeizzah"
     },
     "NUMERO_OWNER": {
-      "desc": "Your number , dont put '+' and put you area code(exemple of togo '228')",
+      "description": "Your number, don't put '+' and put your area code (example of Togo '228')",
       "required": false,
       "value": "254796299159"
     },
     "WARN_COUNT": {
-      "desc": "this is the limit of warn for warning commandes",
+      "description": "this is the limit of warnings for warning commands",
       "required": false,
       "value": "3"
     },
     "STARTING_BOT_MESSAGE": {
-      "description": "if you don't want startting-bot-message put no else put yes",
+      "description": "if you don't want starting-bot-message put no else put yes",
       "required": true,
       "value": "yes"
     },
@@ -112,7 +109,7 @@
       "required": false
     },
     "ANTI_DELETE_MESSAGE": {
-      "description": "if you want to enable anti delete message put yes else put no",
+      "description": "if you want to enable anti-delete message put yes else put no",
       "value": "no",
       "required": false
     },
@@ -138,4 +135,4 @@
       "plan": "heroku-postgresql:essential-0"
     }
   ]
-    }
+}
