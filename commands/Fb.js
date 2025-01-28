@@ -1,6 +1,6 @@
 
 const { keith } = require('../keizzah/keith');
-const { facebook } = require("@xaviabot/fb-downloader");  
+const facebook  = require("@xaviabot/fb-downloader");  
 const conf = require(__dirname + "/../set");
 
 keith({
