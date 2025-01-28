@@ -10,6 +10,15 @@ function delay(ms) {
   console.log(`⏱️ delay for ${ms}ms`);
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+// Format the uptime into a human-readable string
+function runtime(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secondsLeft = Math.floor(seconds % 60);
+
+  return `${hours}h ${minutes}m ${secondsLeft}s`;
+}
+
 // New loading animation with different symbols and larger progress bar
 async function loading(dest, zk) {
   const lod = [
@@ -287,4 +296,44 @@ keith(
 function react(dest, zk, msg, reaction) {
   zk.sendMessage(dest, { react: { text: reaction, key: msg.key } });
 }
+
+keith({
+  nomCom: 'uptime',
+  aliases: ['runtime', 'running'],
+  desc: 'To check runtime',
+  categorie: 'system', // Fixed the typo here (Categorie -> categorie)
+  reaction: '⚔️',
+  fromMe: true, // Removed quotes to make it a boolean
+}, async (dest, zk, commandeOptions) => {
+  const { ms, arg, repondre } = commandeOptions;
+
+  // Get bot's runtime
+  const botUptime = process.uptime(); // Get the bot uptime in seconds
+
+  // Send uptime information to the user
+  await zk.sendMessage(dest, {
+    text: `*${conf.OWNER_NAME} UPTIME IS ${runtime(botUptime)}*`,
+    contextInfo: {
+      externalAdReply: {
+        title: `${conf.BOT} UPTIME`,
+        body: `Bot Uptime: ${runtime(botUptime)}`, // Format the uptime before sending
+        thumbnailUrl: conf.URL, // Replace with your bot profile photo URL
+        sourceUrl: conf.GURL, // Your channel URL
+        mediaType: 1,
+        showAdAttribution: true, // Verified badge
+      },
+    },
+  });
+
+  console.log("Runtime results sent successfully!");
+
+  // Ensure loading animation completes after sending the uptime message
+  await delay(ms); // Await the delay to simulate the loading animation
+});
+
+// React function to allow interaction after sending message
+function react(dest, zk, msg, reaction) {
+  zk.sendMessage(dest, { react: { text: reaction, key: msg.key } });
+}
+
 
