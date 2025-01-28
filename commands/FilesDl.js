@@ -91,7 +91,7 @@ keith({
   nomCom: 'url',          // Command to trigger the function
   categorie: "General",   // Command category
   reaction: '👨🏿‍💻'       // Reaction to use on command
-}, async (groupId, client, context) => {
+}, async (dest, zk, context) => {
   const { msgRepondu, repondre, ms } = context;
 
   // If no message (image/video/audio) is mentioned, prompt user
@@ -127,7 +127,7 @@ keith({
     fs.unlinkSync(mediaPath);
 
     // Send the file URL to the user
-    await client.sendMessage(groupId, {
+    await zk.sendMessage(dest, {
       text: fileUrl,
       contextInfo: {
         externalAdReply: {
