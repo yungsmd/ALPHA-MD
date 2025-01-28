@@ -1,6 +1,6 @@
 {
   "name": "ALPHA-MD",
-  "description": "This BOT was developed by keith..",
+  "description": "developed by keith..",
   "keywords": [
     "bot",
     "node",
@@ -8,7 +8,7 @@
     "whatsapp"
   ],
   "logo": "https://telegra.ph/file/b148f6ed21fa02ac5325b.jpg",
-  "repository": "https://github.com/Keithkeizzah/ALPHA-MD1",
+  "repository": "https://github.com/Keithkeizzah/ALPHA-MD",
   "succes_url": "/",
   "stack": "container",
   "env": {
@@ -31,7 +31,7 @@
       "value": "yes",
       "required": false   "required": false  
     },
-    "BLOCK_ALL": {
+    "AUTO_BLOCK": {
       "description": "Turn this 'on' if you want the bot to automatically block ANYONE WHO SENDS YOU A MESSAGE. Use 'off' to disable it.",
       "value": "yes",
       "required": false  
@@ -61,7 +61,17 @@
       "value": "yes",
       "required": false 
     },
-    "HEROKU_APY_KEY": {
+    "AUTO_STATUS_REPLY": {
+      "description": "Type yes if you want bot to reply to status",
+      "value": "yes",
+      "required": false 
+    },
+    "AUTO_STATUS_MSG": {
+      "description": "type yes to put your bot on public mode or no to put it on private mod",
+      "value": "yes",
+      "required": false 
+    },
+    "HEROKU_API_KEY": {
       "description": "insert your heroku api-key (OPTIONAL)",
       "value" : "", 
       "required": false
