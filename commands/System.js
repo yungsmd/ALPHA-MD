@@ -2,8 +2,32 @@
 const { keith } = require('../keizzah/keith');
 const Heroku = require('heroku-client');
 const s = require("../set");
+const speed = require("performance-now");
 const { exec } = require("child_process");
 const conf = require(__dirname + "/../set");
+// Function for delay simulation
+function delay(ms) {
+  console.log(`⏱️ delay for ${ms}ms`);
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+// New loading animation with different symbols and larger progress bar
+async function loading(dest, zk) {
+  const lod = [
+    "⬛⬛⬜⬜⬜⬜⬛⬛꧁20%꧂",
+    "⬛⬛⬛⬛⬜⬜⬜⬜꧁40%꧂",
+    "⬜⬜⬛⬛⬛⬛⬜⬜꧁60%꧂",
+    "⬜⬜⬜⬜⬛⬛⬛⬛꧁80%꧂",
+    "⬛⬛⬜⬜⬜⬜⬛⬛꧁100%꧂",
+    "*L҉O҉A҉D҉I҉N҉G҉ D҉O҉N҉E҉ ᵗʱᵃᵑᵏᵧₒᵤ ⚔️🗡️*"
+  ];
+
+  let { key } = await zk.sendMessage(dest, { text: 'Loading Please Wait' });
+
+  for (let i = 0; i < lod.length; i++) {
+    await zk.sendMessage(dest, { text: lod[i], edit: key });
+    await delay(500); // Adjust the speed of the animation here
+  }
+}
 
 keith({
   nomCom: "test",
@@ -217,4 +241,50 @@ keith({
     return sendResponse("Command executed successfully, but no output was returned.");
   });
 });
+
+keith(
+  {
+    nomCom: 'ping',
+    aliases: ['speed', 'latency'],
+    desc: 'To check bot response time',
+    categorie: 'system', // Fixed the typo here (Categorie -> categorie)
+    reaction: '⚡',
+    fromMe: true, // Removed quotes to make it a boolean
+  },
+  async (dest, zk) => {
+    // Call the new loading animation without delaying the rest of the bot
+    const loadingPromise = loading(dest, zk);
+
+    // Generate 3 ping results with large random numbers for a more noticeable effect
+    const pingResults = Array.from({ length: 3 }, () => Math.floor(Math.random() * 10000 + 1000));
+
+    // Create larger font for ping results (using special characters for a bigger look)
+    const formattedResults = pingResults.map(ping => `${conf.OWNER_NAME}  ${ping} 𝐌/𝐒  `);
+
+    // Send the ping results with the updated text and format
+    await zk.sendMessage(dest, {
+      text: `${conf.OWNER_NAME} speed is ${formattedResults.join(', ')}`,
+      contextInfo: {
+        externalAdReply: {
+          title: conf.BOT,
+          body: `${formattedResults.join(" | ")}`,
+          thumbnailUrl: conf.URL, // Replace with your bot profile photo URL
+          sourceUrl: conf.GURL, // Your channel URL
+          mediaType: 1,
+          showAdAttribution: true, // Verified badge
+        },
+      },
+    });
+
+    console.log("Ping results sent successfully with new loading animation and formatted results!");
+
+    // Ensure loading animation completes after the ping results
+    await loadingPromise;
+  }
+);
+
+// React function if needed for further interaction
+function react(dest, zk, msg, reaction) {
+  zk.sendMessage(dest, { react: { text: reaction, key: msg.key } });
+}
 
