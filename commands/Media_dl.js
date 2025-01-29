@@ -72,7 +72,7 @@ keith({
 
 keith({
   nomCom: "facebook",
-  aliases: ["fbdl2", "facebookdl2", "fb2"],
+  aliases: ["fbdl", "facebookdl", "fb"],
   categorie: "Download",
   reaction: "📽️"
 }, async (dest, zk, commandeOptions) => {
