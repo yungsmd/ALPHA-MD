@@ -1,6 +1,6 @@
 const { keith } = require('../keizzah/keith');
 const { facebook } = require('@mrnima/facebook-downloader');  
-
+const conf = require(__dirname + "/../set");
 keith({
   nomCom: "facebook",
   aliases: ["fbdl2", "facebookdl2", "fb2"],
