@@ -1,5 +1,6 @@
 const { keith } = require('../keizzah/keith');
 const { igdl } = require("ruhend-scraper");
+const axios = require('axios');
 const { downloadTiktok } = require('@mrnima/tiktok-downloader');
 const { facebook } = require('@mrnima/facebook-downloader');  
 const conf = require(__dirname + "/../set");
@@ -295,3 +296,85 @@ keith({
     repondre('An error occurred: ' + error.message);
   }
 });
+
+keith({
+  nomCom: "spotify",
+  aliases: ["sdl", "spotifydl"],
+  reaction: '⚔️',
+  categorie: "download"
+}, async (dest, zk, params) => {
+  const { repondre, arg, ms } = params;  
+  const text = arg.join(" ").trim(); 
+
+  if (!text) {
+    return repondre("What song do you want to download?");
+  }
+
+  try {
+    let data = await axios.get(`https://api.dreaded.site/api/spotifydl?title=${text}`);
+
+    if (data.data.success) {
+      const audio = data.data.result.downloadLink;
+      const filename = data.data.result.title;
+
+      await zk.sendMessage(dest, {
+        document: { url: audio },
+        mimetype: "audio/mpeg",
+        fileName: `${filename}.mp3`,
+        contextInfo: {
+          externalAdReply: {
+            title: conf.BOT,
+            body: "spotify download",
+            mediaType: 1,
+            sourceUrl: conf.GURL,
+            thumbnailUrl: conf.URL,
+            renderLargerThumbnail: false,
+            showAdAttribution: true,
+          },
+        },
+      }, { quoted: ms });
+
+      await zk.sendMessage(dest, {
+        audio: { url: audio },
+        mimetype: "audio/mpeg",
+        fileName: `${filename}.mp3`,
+        contextInfo: {
+          externalAdReply: {
+            title: conf.BOT,
+            body: "spotify download",
+            mediaType: 1,
+            sourceUrl: conf.GURL,
+            thumbnailUrl: conf.URL,
+            renderLargerThumbnail: false,
+            showAdAttribution: true,
+          },
+        },
+      }, { quoted: ms });
+
+      await zk.sendMessage(dest, {
+        document: { url: audio },
+        mimetype: "audio/mp4",
+        fileName: `${filename}.mp4`,
+        contextInfo: {
+          externalAdReply: {
+            title: conf.BOT,
+            body: "spotify download",
+            mediaType: 1,
+            sourceUrl: conf.GURL,
+            thumbnailUrl: conf.URL,
+            renderLargerThumbnail: false,
+            showAdAttribution: true,
+          },
+        },
+      }, { quoted: ms });
+
+    } else {
+      await repondre("Failed to get a valid response from API endpoint");
+    }
+
+  } catch (error) {
+    console.error("Error fetching the download link:", error);
+    await repondre("Unable to fetch download link, try matching exact song name or with artist name.");
+  }
+});
+
