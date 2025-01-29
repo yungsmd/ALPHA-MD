@@ -14,11 +14,6 @@ keith({
     return repondre('Please insert a public Facebook video link!');
   }
 
-  // Validate that the argument contains a valid Facebook URL
-  if (!arg[0].includes('https://')) {
-    return repondre("That is not a valid Facebook link.");
-  }
-
   try {
     // Download the Facebook video data
     const videoData = await getFBInfo(arg[0]);
