@@ -24,7 +24,7 @@
     },
     "GREET": {
       "description": "when enabled it automatically sends  greeting message to members in your pm",
-      "value": "yes",
+      "value": "no",
       "required": false
     },
     "AUTO_LIKE_STATUS": {
