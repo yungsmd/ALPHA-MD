@@ -1,5 +1,6 @@
 const { keith } = require('../keizzah/keith');
 const { igdl } = require("ruhend-scraper");
+const { downloadTiktok } = require('@mrnima/tiktok-downloader');
 const { facebook } = require('@mrnima/facebook-downloader');  
 const conf = require(__dirname + "/../set");
 
@@ -203,5 +204,94 @@ keith({
   } catch (error) {
     console.error(error);
     repondre('An error occurred: try fbdl2 using this link' + error.message);
+  }
+});
+
+keith({
+  nomCom: "tiktok",
+  aliases: ["tikdl", "tiktokdl"],
+  categorie: "Download",
+  reaction: "📽️"
+}, async (dest, zk, commandeOptions) => {
+  const { repondre, ms, arg } = commandeOptions;
+
+  if (!arg[0]) {
+    return repondre('Please insert a public TikTok video link!');
+  }
+
+  if (!arg[0].includes('tiktok.com')) {
+    return repondre("That is not a valid TikTok link.");
+  }
+
+  try {
+    // Download the TikTok video data
+    let tiktokData = await downloadTiktok(arg[0]);
+
+    const caption = `
+     *𝐀𝐋𝐏𝐇𝐀 𝐌𝐃 𝐓𝐈𝐊𝐓𝐎𝐊 𝐃𝐋*
+    |__________________________|
+    |-᳆        *ᴛɪᴛʟᴇ*  
+     ${tiktokData.result.title}
+    |_________________________
+    ʀᴇᴘʟʏ ᴡɪᴛʜ ʙᴇʟᴏᴡ ɴᴜᴍʙᴇʀs 
+    |-᳆  *1* sᴅ ǫᴜᴀʟɪᴛʏ
+    |-᳆  *2*  ʜᴅ ǫᴜᴀʟɪᴛʏ
+    |-᳆  *3*  ᴀᴜᴅɪᴏ
+    |__________________________|
+    `;
+
+    // Send the image and caption with a reply
+    const message = await zk.sendMessage(dest, {
+      image: { url: tiktokData.result.image },
+      caption: caption,
+    });
+
+    const messageId = message.key.id;
+
+    // Event listener for reply messages
+    zk.ev.on("messages.upsert", async (update) => {
+      const messageContent = update.messages[0];
+      if (!messageContent.message) return;
+
+      const responseText = messageContent.message.conversation || messageContent.message.extendedTextMessage?.text;
+      const keithdl = messageContent.key.remoteJid;
+
+      // Check if the response is a reply to the message we sent
+      const isReplyToMessage = messageContent.message.extendedTextMessage?.contextInfo.stanzaId === messageId;
+
+      if (isReplyToMessage) {
+        // React to the message
+        await zk.sendMessage(keithdl, {
+          react: { text: '⬇️', key: messageContent.key },
+        });
+
+        const tiktokLinks = tiktokData.result;
+
+        await zk.sendMessage(keithdl, {
+          react: { text: '⬆️', key: messageContent.key },
+        });
+
+        // Send the requested media based on the user's response
+        if (responseText === '1') {
+          await zk.sendMessage(keithdl, {
+            video: { url: tiktokLinks.dl_link.download_mp4_1 },
+            caption: "*𝐀𝐋𝐏𝐇𝐀 𝐌𝐃*",
+          }, { quoted: messageContent });
+        } else if (responseText === '2') {
+          await zk.sendMessage(keithdl, {
+            video: { url: tiktokLinks.dl_link.download_mp4_2 },
+            caption: "*𝐀𝐋𝐏𝐇𝐀 𝐌𝐃*",
+          }, { quoted: messageContent });
+        } else if (responseText === '3') {
+          await zk.sendMessage(keithdl, {
+            audio: { url: tiktokLinks.dl_link.download_mp3 },
+            mimetype: "audio/mpeg",
+          }, { quoted: messageContent });
+        }
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    repondre('An error occurred: ' + error.message);
   }
 });
