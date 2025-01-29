@@ -15,7 +15,7 @@ keith({
   }
 
   // Validate that the argument contains a valid Facebook URL
-  if (!arg[0].includes('https://facebook.com')) {
+  if (!arg[0].includes('https://')) {
     return repondre("That is not a valid Facebook link.");
   }
 
