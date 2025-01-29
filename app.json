@@ -67,10 +67,10 @@
       "value": "ALPHA-MD",
       "required": false
     },
-    "BOT_MENU_LINK": {
-      "description": "Add one or many links for your bot menu (e.g., url1,url2,url3)",
-      "value": "https://telegra.ph/file/967c663a5978c545f78d6.jpg",
-      "required": true
+    "GROUP_CONTROL": {
+      "description": "urs if you want bot yo control group features such as antilink,antispam,antibad",
+      "value": "yes",
+      "required": false
     },
     "PUBLIC_MODE": {
       "description": "Set 'yes' to make your bot public or 'no' to keep it private",
