@@ -63,9 +63,9 @@
       "required": false
     },
     "BOT_NAME": {
-      "description": "Give a name for your bot",
-      "value": "ALPHA-MD",
-      "required": false
+      "description": "you must give a name for you bot uhh??!!",
+      "value": "",
+      "required": true
     },
     "GROUP_CONTROL": {
       "description": "urs if you want bot yo control group features such as antilink,antispam,antibad",
@@ -93,14 +93,14 @@
       "required": true
     },
     "OWNER_NAME": {
-      "description": "Your name",
-      "value": "keithkeizzah",
-      "required": false
+      "description": "don't you have a name bro.Insert your name here!!",
+      "value": "",
+      "required": true
     },
     "URL": {
-      "description": "Insert your bot url to display your image link ",
+      "description": "you must add your bot image url.Get your image url now and fill it here",
       "value": "",
-      "required": false
+      "required": true
     },
     "AUTO_READ_MESSAGES": {
       "description": "yes toactivate no to deactivate",
