@@ -762,7 +762,7 @@ zk.ev.on("messages.upsert", async (m) => {
   const auteurMessage = ms.key.participant || origineMessage;
   const idBot = zk.user.jid;
   
-  const admins = await zk.groupMetadata(origineMessage).participants.filter(p => p.admin === 'admin' || p.admin === 'superadmin').map(p => p.id);
+  
   const verifGroupe = origineMessage.endsWith('@g.us');
   const conf = { GCF: 'yes' };  // your configuration variable
   
