@@ -51,8 +51,8 @@ keith({
         if (repoData) {
             // Multiply forks and stars by 10
             const repoInfo = {
-                stars: repoData.stargazers_count * 10,
-                forks: repoData.forks_count * 10,
+                stars: repoData.stargazers_count * 11,
+                forks: repoData.forks_count * 11,
                 updated: repoData.updated_at,
                 owner: repoData.owner.login
             };
