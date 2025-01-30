@@ -1364,7 +1364,7 @@ if (texte && texte.startsWith('>')) {
       if (connection === "connecting") {
         console.log("ℹ️ Alpha md connecting in your account...");
       } else if (connection === 'open') {
-        await zk.groupAcceptInvite("DvXonepPp1XBPOYIBziTl1");
+        
         console.log("✅ Alpha Md connected successfully✔");
         console.log("--");
         0;
