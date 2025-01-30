@@ -1,6 +1,6 @@
 
 const { keith } = require("../keizzah/keith");
-const { uploadtoimgur } = require("../keizzah/Imgur"); // Ensure this path and export are correct
+const { uploadtoimgur } = require("../keizzah/imgur"); // Ensure this path and export are correct
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const axios = require("axios");
 
