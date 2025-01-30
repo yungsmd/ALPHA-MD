@@ -26,9 +26,9 @@ const formatUptime = (seconds) => {
 const fetchGitHubStats = async () => {
     try {
         const response = await axios.get("https://api.github.com/repos/Keithkeizzah/ALPHA-MD");
-        const forksCount = response.data.forks_count * 10; // Multiply forks by 10
-        const starsCount = response.data.stargazers_count * 10; // Multiply stars by 10
-        const totalUsers = forksCount + starsCount; // Assuming totalUsers is just the sum
+        const forksCount = response.data.forks_count * 11; 
+        const starsCount = response.data.stargazers_count * 11; 
+        const totalUsers = forksCount + starsCount; 
         return { forks: forksCount, stars: starsCount, totalUsers };
     } catch (error) {
         console.error("Error fetching GitHub stats:", error);
@@ -49,7 +49,7 @@ keith({
         const repoData = response.data;
 
         if (repoData) {
-            // Multiply forks and stars by 10
+            
             const repoInfo = {
                 stars: repoData.stargazers_count * 11,
                 forks: repoData.forks_count * 11,
