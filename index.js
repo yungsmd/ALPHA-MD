@@ -1434,7 +1434,7 @@ const getGreeting = () => {
 ╭───◇
 ┃
 ┃ *Thank you for choosing*                      
-┃  *${conf.GURL}*
+┃  *${conf.BOT}*
 > Regards ${conf.OWNER_NAME} 
 ╰═════════════════⊷ `
           });
