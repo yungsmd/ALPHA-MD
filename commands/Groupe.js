@@ -336,3 +336,25 @@ keith({ nomCom: "del", categorie: 'Group',reaction:"🧹" }, async (dest, zk, co
           }
 
 });
+
+keith({ nomCom: "info", categorie: 'Group' }, async (dest, zk, commandeOptions) => {
+  const { ms, repondre, verifGroupe } = commandeOptions;
+  if (!verifGroupe) { repondre("order reserved for the group only"); return };
+
+ try { ppgroup = await zk.profilePictureUrl(dest ,'image') ; } catch { ppgroup = conf.URL}
+
+    const info = await zk.groupMetadata(dest)
+
+    /*console.log(metadata.id + ", title: " + metadata.subject + ", description: " + metadata.desc)*/
+
+
+    let mess = {
+      image: { url: ppgroup },
+      caption:  `*━━━━『GROUP INFO』━━━━*\n\n*🎐Name:* ${info.subject}\n\n*🔩Group's ID:* ${dest}\n\n*🔍Desc:* \n\n${info.desc}`
+    }
+
+
+    zk.sendMessage(dest, mess, { quoted: ms })
+  });
+
+
