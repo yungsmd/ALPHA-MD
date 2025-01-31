@@ -65,7 +65,7 @@
     "BOT_NAME": {
       "description": "you must give a name for you bot uhh??!!",
       "value": "",
-      "required": true
+      "required": false 
     },
     "GROUP_CONTROL": {
       "description": "urs if you want bot yo control group features such as antilink,antispam,antibad",
@@ -95,7 +95,7 @@
     "OWNER_NAME": {
       "description": "don't you have a name bro.Insert your name here!!",
       "value": "",
-      "required": true
+      "required": false
     },
     "URL": {
       "description": "you must add your bot image url.Get your image url now and fill it here",
