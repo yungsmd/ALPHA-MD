@@ -533,5 +533,61 @@ keith({ nomCom: "left", categorie: "Mods" }, async (dest, zk, commandeOptions) =
   zk.groupLeave(dest)
 });
 
+keith({ nomCom: "gname", categorie: 'Group' }, async (dest, zk, commandeOptions) => {
+  const { arg, repondre, verifAdmin } = commandeOptions;
+
+  if (!verifAdmin) {
+    repondre("Order reserved for administrators of the group");
+    return;
+  }
+  if (!arg[0]) {
+    repondre("Please enter the group name");
+    return;
+  }
+  const nom = arg.join(' ');
+  await zk.groupUpdateSubject(dest, nom);
+  repondre(`Group name updated to: *${nom}*`);
+});
+
+// Update group description
+keith({ nomCom: "gdesc", categorie: 'Group' }, async (dest, zk, commandeOptions) => {
+  const { arg, repondre, verifAdmin } = commandeOptions;
+
+  if (!verifAdmin) {
+    repondre("Order reserved for administrators of the group");
+    return;
+  }
+  if (!arg[0]) {
+    repondre("Please enter the group description");
+    return;
+  }
+  const desc = arg.join(' ');
+  await zk.groupUpdateDescription(dest, desc);
+  repondre(`Group description updated to: *${desc}*`);
+});
+
+// Update group profile picture
+keith({ nomCom: "gpp", categorie: 'Group' }, async (dest, zk, commandeOptions) => {
+  const { repondre, msgRepondu, verifAdmin } = commandeOptions;
+
+  if (!verifAdmin) {
+    repondre("Order reserved for administrators of the group");
+    return;
+  }
+  if (msgRepondu.imageMessage) {
+    const pp = await zk.downloadAndSaveMediaMessage(msgRepondu.imageMessage);
+
+    await zk.updateProfilePicture(dest, { url: pp })
+      .then(() => {
+        zk.sendMessage(dest, { text: "Group profile picture changed" });
+        fs.unlinkSync(pp);
+      })
+      .catch(err => zk.sendMessage(dest, { text: err.toString() }));
+  } else {
+    repondre('Please mention an image');
+  }
+});
+
+
 
 
