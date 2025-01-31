@@ -1,4 +1,4 @@
-const { keith } = require("../kezzah/keith");
+const { keith } = require("../keizzah/keith");
 const { Sticker, StickerTypes } = require('wa-sticker-formatter');
 const { ajouterOuMettreAJourJid, mettreAJourAction, verifierEtatJid } = require("../bdd/antilien");
 const { atbajouterOuMettreAJourJid, atbverifierEtatJid } = require("../bdd/antibot");
@@ -6,6 +6,9 @@ const { search, download } = require("aptoide-scraper");
 const fs = require("fs-extra");
 const conf = require("../set");
 const { default: axios } = require('axios');
+const cron = require("../bdd/cron");
+const { exec } = require("child_process");
+
 
 keith({ nomCom: "tagall", categorie: 'Group', reaction: "📣" }, async (dest, zk, commandeOptions) => {
   const { ms, repondre, arg, verifGroupe, nomGroupe, infosGroupe, nomAuteurMessage, verifAdmin, superUser } = commandeOptions;
@@ -694,6 +697,106 @@ keith({nomCom:"hidetag",categorie:'Group',reaction:"🎤"},async(dest,zk,command
 
 });
 
+
+keith({
+  nomCom: 'automute',
+  categorie: 'Group'
+}, async (dest, zk, commandeOptions) => {
+  const { arg, repondre, verifAdmin } = commandeOptions;
+
+  if (!verifAdmin) {
+    repondre('You are not an administrator of the group');
+    return;
+  }
+
+  const group_cron = await cron.getCronById(dest);
+
+  if (!arg || arg.length === 0) {
+    let state;
+    if (group_cron == null || group_cron.mute_at == null) {
+      state = "No time set for automatic mute";
+    } else {
+      state = `The group will be muted at ${(group_cron.mute_at).split(':')[0]}:${(group_cron.mute_at).split(':')[1]}`;
+    }
+
+    const msg = `*State:* ${state}\n*Instructions:* To activate automatic mute, add the minute and hour after the command separated by ':'. Example: automute 9:30\n*To delete the automatic mute, use the command* automute del`;
+
+    repondre(msg);
+    return;
+  } else {
+    const texte = arg.join(' ');
+
+    if (texte.toLowerCase() === 'del') {
+      if (group_cron == null) {
+        repondre('No cronometrage is active');
+      } else {
+        await cron.delCron(dest);
+        repondre("The automatic mute has been removed; restart to apply changes")
+          .then(() => {
+            exec("pm2 restart all");
+          });
+      }
+    } else if (texte.includes(':')) {
+      await cron.addCron(dest, "mute_at", texte);
+      repondre(`Setting up automatic mute for ${texte}; restart to apply changes`)
+        .then(() => {
+          exec("pm2 restart all");
+        });
+    } else {
+      repondre('Please enter a valid time with hour and minute separated by ":"');
+    }
+  }
+});
+
+keith({
+  nomCom: 'autounmute',
+  categorie: 'Group'
+}, async (dest, zk, commandeOptions) => {
+  const { arg, repondre, verifAdmin } = commandeOptions;
+
+  if (!verifAdmin) {
+    repondre('You are not an administrator of the group');
+    return;
+  }
+
+  const group_cron = await cron.getCronById(dest);
+
+  if (!arg || arg.length === 0) {
+    let state;
+    if (group_cron == null || group_cron.unmute_at == null) {
+      state = "No time set for autounmute";
+    } else {
+      state = `The group will be un-muted at ${(group_cron.unmute_at).split(':')[0]}:${(group_cron.unmute_at).split(':')[1]}`;
+    }
+
+    const msg = `*State:* ${state}\n*Instructions:* To activate autounmute, add the minute and hour after the command separated by ':'. Example: autounmute 7:30\n*To delete autounmute, use the command* autounmute del`;
+
+    repondre(msg);
+    return;
+  } else {
+    const texte = arg.join(' ');
+
+    if (texte.toLowerCase() === 'del') {
+      if (group_cron == null) {
+        repondre('No cronometrage has been activated');
+      } else {
+        await cron.delCron(dest);
+        repondre("The autounmute has been removed; restart to apply the changes")
+          .then(() => {
+            exec("pm2 restart all");
+          });
+      }
+    } else if (texte.includes(':')) {
+      await cron.addCron(dest, "unmute_at", texte);
+      repondre(`Setting up autounmute for ${texte}; restart to apply the changes`)
+        .then(() => {
+          exec("pm2 restart all");
+        });
+    } else {
+      repondre('Please enter a valid time with hour and minute separated by ":"');
+    }
+  }
+});
 
 
 
