@@ -356,5 +356,182 @@ keith({ nomCom: "info", categorie: 'Group' }, async (dest, zk, commandeOptions) 
 
     zk.sendMessage(dest, mess, { quoted: ms })
   });
+keith({ nomCom: "antilink", categorie: 'Group', reaction: "🔗" }, async (dest, zk, commandeOptions) => {
+
+
+  var { repondre, arg, verifGroupe, superUser, verifAdmin } = commandeOptions;
+  
+
+  
+  if (!verifGroupe) {
+    return repondre("*for groups only*");
+  }
+  
+  if( superUser || verifAdmin) {
+    const enetatoui = await verifierEtatJid(dest)
+    try {
+      if (!arg || !arg[0] || arg === ' ') { repondre("antilink on to activate the anti-link feature\nantilink off to deactivate the anti-link feature\nantilink action/remove to directly remove the link without notice\nantilink action/warn to give warnings\nantilink action/delete to remove the link without any sanctions\n\nPlease note that by default, the anti-link feature is set to delete.") ; return};
+     
+      if(arg[0] === 'on') {
+
+      
+       if(enetatoui ) { repondre("the antilink is already activated for this group")
+                    } else {
+                  await ajouterOuMettreAJourJid(dest,"oui");
+                
+              repondre("the antilink is activated successfully") }
+     
+            } else if (arg[0] === "off") {
+
+              if (enetatoui) { 
+                await ajouterOuMettreAJourJid(dest , "non");
+
+                repondre("The antilink has been successfully deactivated");
+                
+              } else {
+                repondre("antilink is not activated for this group");
+              }
+            } else if (arg.join('').split("/")[0] === 'action') {
+                            
+
+              let action = (arg.join('').split("/")[1]).toLowerCase() ;
+
+              if ( action == 'remove' || action == 'warn' || action == 'delete' ) {
+
+                await mettreAJourAction(dest,action);
+
+                repondre(`The anti-link action has been updated to ${arg.join('').split("/")[1]}`);
+
+              } else {
+                  repondre("The only actions available are warn, remove, and delete") ;
+              }
+            
+
+            } else repondre("antilink on to activate the anti-link feature\nantilink off to deactivate the anti-link feature\nantilink action/remove to directly remove the link without notice\nantilink action/warn to give warnings\nantilink action/delete to remove the link without any sanctions\n\nPlease note that by default, the anti-link feature is set to delete.")
+
+      
+    } catch (error) {
+       repondre(error)
+    }
+
+  } else { repondre('You are not entitled to this order') ;
+  }
+
+});
+
+
+
+
+ //------------------------------------antibot-------------------------------
+
+ keith({ nomCom: "antibot", categorie: 'Group', reaction: "🔗" }, async (dest, zk, commandeOptions) => {
+
+
+  var { repondre, arg, verifGroupe, superUser, verifAdmin } = commandeOptions;
+  
+
+  
+  if (!verifGroupe) {
+    return repondre("*for groups only*");
+  }
+  
+  if( superUser || verifAdmin) {
+    const enetatoui = await atbverifierEtatJid(dest)
+    try {
+      if (!arg || !arg[0] || arg === ' ') { repondre('antibot on to activate the anti-bot feature\nantibot off to deactivate the antibot feature\nantibot action/remove to directly remove the bot without notice\nantibot action/warn to give warnings\nantilink action/delete to remove the bot message without any sanctions\n\nPlease note that by default, the anti-bot feature is set to delete.') ; return};
+     
+      if(arg[0] === 'on') {
+
+      
+       if(enetatoui ) { repondre("the antibot is already activated for this group")
+                    } else {
+                  await atbajouterOuMettreAJourJid(dest,"oui");
+                
+              repondre("the antibot is successfully activated") }
+     
+            } else if (arg[0] === "off") {
+
+              if (enetatoui) { 
+                await atbajouterOuMettreAJourJid(dest , "non");
+
+                repondre("The antibot has been successfully deactivated");
+                
+              } else {
+                repondre("antibot is not activated for this group");
+              }
+            } else if (arg.join('').split("/")[0] === 'action') {
+
+              let action = (arg.join('').split("/")[1]).toLowerCase() ;
+
+              if ( action == 'remove' || action == 'warn' || action == 'delete' ) {
+
+                await mettreAJourAction(dest,action);
+
+                repondre(`The anti-bot action has been updated to ${arg.join('').split("/")[1]}`);
+
+              } else {
+                  repondre("The only actions available are warn, remove, and delete") ;
+              }
+            
+
+            } else {  
+              repondre('antibot on to activate the anti-bot feature\nantibot off to deactivate the antibot feature\nantibot action/remove to directly remove the bot without notice\nantibot action/warn to give warnings\nantilink action/delete to remove the bot message without any sanctions\n\nPlease note that by default, the anti-bot feature is set to delete.') ;
+
+                            }
+    } catch (error) {
+       repondre(error)
+    }
+
+  } else { repondre('You are not entitled to this order') ;
+
+  }
+
+});
+
+//----------------------------------------------------------------------------
+
+keith({ nomCom: "group", categorie: 'Group' }, async (dest, zk, commandeOptions) => {
+
+  const { repondre, verifGroupe, verifAdmin, superUser, arg } = commandeOptions;
+
+  if (!verifGroupe) { repondre("order reserved for group only"); return };
+  if (superUser || verifAdmin) {
+
+    if (!arg[0]) { repondre('Instructions:\n\nType group open or close'); return; }
+    const option = arg.join(' ')
+    switch (option) {
+      case "open":
+        await zk.groupSettingUpdate(dest, 'not_announcement')
+        repondre('group open')
+        break;
+      case "close":
+        await zk.groupSettingUpdate(dest, 'announcement');
+        repondre('Group close successfully');
+        break;
+      default: repondre("Please don't invent an option")
+    }
+
+    
+  } else {
+    repondre("order reserved for the administratorr");
+    return;
+  }
+ 
+
+});
+
+keith({ nomCom: "left", categorie: "Mods" }, async (dest, zk, commandeOptions) => {
+
+  const { repondre, verifGroupe, superUser } = commandeOptions;
+  if (!verifGroupe) { repondre("order reserved for group only"); return };
+  if (!superUser) {
+    repondre("command reserved for the bot owner");
+    return;
+  }
+  await repondre('sayonnara') ;
+   
+  zk.groupLeave(dest)
+});
+
 
 
