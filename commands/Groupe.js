@@ -799,5 +799,71 @@ keith({
 });
 
 
+keith({
+  nomCom: 'fkick',
+  aliases: ['foreigner', 'countrykick'],
+  categorie: 'Group'
+}, async (dest, zk, commandeOptions) => {
+  const { arg, repondre, verifAdmin, superUser, verifZokouAdmin } = commandeOptions;
+
+  if (verifAdmin || superUser) {
+    if (!verifZokouAdmin) {
+      repondre('You need administrative rights to perform this command');
+      return;
+    }
+
+    if (!arg || arg.length === 0) {
+      repondre('Please enter the country code whose members will be removed');
+      return;
+    }
+
+    const metadata = await zk.groupMetadata(dest);
+    const participants = metadata.participants;
+
+    for (let i = 0; i < participants.length; i++) {
+      if (participants[i].id.startsWith(arg[0]) && participants[i].admin === null) {
+        await zk.groupParticipantsUpdate(dest, [participants[i].id], "remove");
+      }
+    }
+  } else {
+    repondre('Sorry, you are not an administrator of the group');
+  }
+});
+
+keith({
+  nomCom: 'nsfw',
+  categorie: 'Group'
+}, async (dest, zk, commandeOptions) => {
+  const { arg, repondre, verifAdmin } = commandeOptions;
+
+  if (!verifAdmin) {
+    repondre('Sorry, you cannot enable NSFW content without being an administrator of the group');
+    return;
+  }
+
+  const hbd = require('../bdd/hentai');
+  const isHentaiGroupe = await hbd.checkFromHentaiList(dest);
+
+  if (arg[0] === 'on') {
+    if (isHentaiGroupe) {
+      repondre('NSFW content is already active for this group');
+      return;
+    }
+
+    await hbd.addToHentaiList(dest);
+    repondre('NSFW content is now active for this group');
+  } else if (arg[0] === 'off') {
+    if (!isHentaiGroupe) {
+      repondre('NSFW content is already disabled for this group');
+      return;
+    }
+
+    await hbd.removeFromHentaiList(dest);
+    repondre('NSFW content is now disabled for this group');
+  } else {
+    repondre('You must enter "on" or "off"');
+  }
+});
+
 
 
