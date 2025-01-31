@@ -173,7 +173,7 @@ if (res === '403') return repondre('Failed, Invite sent.');
 
   await sticker.toFile("st.webp");
   zk.sendMessage(dest, { sticker: fs.readFileSync("st.webp") }, { quoted: msgRepondu });
-});.
+});
 
 
 
