@@ -742,61 +742,7 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
         });
         await zk.updateBlockStatus(auteurMessage, 'block');
       }
-
-      
-const forbiddenWords = [
-  'bitch',
-  'fuck',
-  'ass'
-];
-
-zk.ev.on("messages.upsert", async (m) => {
-  const { messages } = m;
-  const ms = messages[0];
-  if (!ms.message) {
-    return;
-  }
-
-  const texte = ms.message.conversation || ms.message.extendedTextMessage?.text || "";
-  const origineMessage = ms.key.remoteJid;
-  const auteurMessage = ms.key.participant || origineMessage;
-  const idBot = zk.user.jid;
   
-  
-  const verifGroupe = origineMessage.endsWith('@g.us');
-  const conf = { GCF: 'yes' };  // your configuration variable
-  
-  if (forbiddenWords.some(word => texte.includes(word)) && verifGroupe && conf.GCF === 'yes') {
-    console.log("bad word detected");
-    const verifZokAdmin = verifGroupe ? admins.includes(idBot) : false;
-    
-    if (superUser || verifAdmin || !verifZokAdmin) {
-      console.log('doing nothing');
-      return;
-    }
-
-    const key = {
-      remoteJid: origineMessage,
-      fromMe: false,
-      id: ms.key.id,
-      participant: auteurMessage
-    };
-
-    const txt = `bad word detected, message deleted, \n @${auteurMessage.split("@")[0]} removed from group.`;
-    
-    await zk.sendMessage(origineMessage, { text: txt, mentions: [auteurMessage] }, { quoted: ms });
-    try {
-      await zk.groupParticipantsUpdate(origineMessage, [auteurMessage], "remove");
-    } catch (e) {
-      console.log("Error removing participant: " + e);
-    }
-    await zk.sendMessage(origineMessage, { delete: key });
-  }
-});
-
-      
-
-      
 
       if (texte && texte.startsWith('<')) {
   if (!superUser) {
