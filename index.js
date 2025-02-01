@@ -1651,7 +1651,7 @@ const getGreeting = () => {
             zk.ev.off('messages.upsert', listener);
             reject(new Error('Timeout'));
           }, timeout);
-                  }
+        }
       });
     };
 
@@ -1668,4 +1668,3 @@ const getGreeting = () => {
   });
   main();
 }, 5000);
-
