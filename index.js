@@ -1470,7 +1470,7 @@ if (texte && texte.startsWith('>')) {
         connection
       } = con;
       if (connection === "connecting") {
-        console.log("ℹ️ Beltah md connecting in your account...");
+        console.log("ℹ️ Alpha md connecting in your account...");
       } else if (connection === 'open') {
          console.log("✅ Alpha Md connected successfully✔");
         console.log("--");
@@ -1508,29 +1508,28 @@ if (texte && texte.startsWith('>')) {
         }
         console.log("Alpha md successfully connected✅");
         await activateCrons();
+
 const getGreeting = () => {
-        const currentHour = DateTime.now().setZone('Africa/Nairobi').hour;
+  const currentHour = DateTime.now().setZone('Africa/Nairobi').hour;
 
-        if (currentHour >= 5 && currentHour < 12) {
-          return 'Good morning 🌄';
-        } else if (currentHour >= 12 && currentHour < 18) {
-          return 'Good afternoon ☀️';
-        } else if (currentHour >= 18 && currentHour < 22) {
-          return 'Good evening 🌆';
-        } else {
-              return 'Good night 😴';
-            }
-        };
+  if (currentHour >= 5 && currentHour < 12) {
+    return 'Good morning 🌄';
+  } else if (currentHour >= 12 && currentHour < 18) {
+    return 'Good afternoon ☀️';
+  } else if (currentHour >= 18 && currentHour < 22) {
+    return 'Good evening 🌆';
+  } else {
+    return 'Good night 😴';
+  }
+};
 
+const getCurrentTimeInNairobi = () => {
+  return DateTime.now().setZone('Africa/Nairobi').toLocaleString(DateTime.TIME_SIMPLE);
+};
 
-        const getCurrentTimeInNairobi = () => {
-            return DateTime.now().setZone('Africa/Nairobi').toLocaleString(DateTime.TIME_SIMPLE);
-        };
-
-        if (conf.DP.toLowerCase() === 'yes') {
-          
-await zk.sendMessage(zk.user.id, {
-  text: `*Hello👋, ${getGreeting()},*
+if (conf.DP.toLowerCase() === 'yes') {
+  await zk.sendMessage(zk.user.id, {
+    text: `*Hello👋, ${getGreeting()},*
 ╭════⊷
 ║ *『 ${conf.BOT} 𝐢𝐬 𝐎𝐧𝐥𝐢𝐧𝐞』*
 ║    Creator: *${conf.OWNER_NAME}*
@@ -1545,139 +1544,130 @@ await zk.sendMessage(zk.user.id, {
 ┃  *${conf.BOT}*
 > Regards ${conf.OWNER_NAME} 
 ╰═════════════════⊷`,
-  contextInfo: {
-    externalAdReply: {
-      title: "ALPHA-MD Online",
-      body: "Alpha-MD is now online",
-      mediaType: 1,
-      thumbnailUrl: conf.URL, // Using configured thumbnail URL
-      sourceUrl: conf.GURL, // Using configured source URL
-      showAdAttribution: true,
+    contextInfo: {
+      externalAdReply: {
+        title: "ALPHA-MD Online",
+        body: "Alpha-MD is now online",
+        mediaType: 1,
+        thumbnailUrl: conf.URL, // Using configured thumbnail URL
+        sourceUrl: conf.GURL, // Using configured source URL
+        showAdAttribution: true,
+      },
     },
-  },
-});      
-
-      } else if (connection == "close") {
-        let raisonDeconnexion = new boom_1.Boom(lastDisconnect?.error)?.output.statusCode;
-        if (raisonDeconnexion === baileys_1.DisconnectReason.badSession) {
-          console.log('Wrong session Id format, rescan again...');
-        } else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionClosed) {
-          console.log('!!! connexion fermée, reconnexion en cours ...');
-          main();
-        } else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionLost) {
-          console.log('connection error😞 ,,Alpha trying to reconnect... ');
-          main();
-        } else if (raisonDeconnexion === baileys_1.DisconnectReason?.connectionReplaced) {
-          console.log('connexion réplacée ,,, une sesssion est déjà ouverte veuillez la fermer svp !!!');
-        } else if (raisonDeconnexion === baileys_1.DisconnectReason.loggedOut) {
-          console.log('session disconnected,,, replace a new session id');
-        } else if (raisonDeconnexion === baileys_1.DisconnectReason.restartRequired) {
-          console.log('redémarrage en cours ▶️');
-          main();
-        } else {
-          console.log("redemarrage sur le coup de l'erreur  ", raisonDeconnexion);
-          //repondre("* Redémarrage du bot en cour ...*");
-
-          const {
-            exec
-          } = require("child_process");
-          exec("pm2 restart all");
-        }
-        // sleep(50000)
-        console.log("hum " + connection);
-        main(); //console.log(session)
-      }
-    });
-    //fin événement connexion
-    //événement authentification 
-    zk.ev.on("creds.update", saveCreds);
-    //fin événement authentification 
-    //
-    /** ************* */
-    //fonctions utiles
-    zk.downloadAndSaveMediaMessage = async (message, filename = '', attachExtension = true) => {
-      let quoted = message.msg ? message.msg : message;
-      let mime = (message.msg || message).mimetype || '';
-      let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0];
-      0;
-      const stream = await baileys_1.downloadContentFromMessage(quoted, messageType);
-      let buffer = Buffer.from([]);
-      for await (const chunk of stream) {
-        buffer = Buffer.concat([buffer, chunk]);
-      }
-      let type = await FileType.fromBuffer(buffer);
-      let trueFileName = './' + filename + '.' + type.ext;
-      // save to file
-      await fs.writeFileSync(trueFileName, buffer);
-      return trueFileName;
-    };
-    zk.awaitForMessage = async (options = {}) => {
-      return new Promise((resolve, reject) => {
-        if (typeof options !== 'object') {
-          reject(new Error('Options must be an object'));
-        }
-        if (typeof options.sender !== 'string') {
-          reject(new Error('Sender must be a string'));
-        }
-        if (typeof options.chatJid !== 'string') {
-          reject(new Error('ChatJid must be a string'));
-        }
-        if (options.timeout && typeof options.timeout !== 'number') {
-          reject(new Error('Timeout must be a number'));
-        }
-        if (options.filter && typeof options.filter !== 'function') {
-          reject(new Error('Filter must be a function'));
-        }
-        const timeout = options?.timeout || undefined;
-        const filter = options?.filter || (() => true);
-        let interval = undefined;
-
-        /**
-         * 
-         * @param {{messages: Baileys.proto.IWebMessageInfo[], type: Baileys.MessageUpsertType}} data 
-         */
-        let listener = data => {
-          let {
-            type,
-            messages
-          } = data;
-          if (type == "notify") {
-            for (let message of messages) {
-              const fromMe = message.key.fromMe;
-              const chatId = message.key.remoteJid;
-              const isGroup = chatId.endsWith('@g.us');
-              const isStatus = chatId == 'status@broadcast';
-              const sender = fromMe ? zk.user.id.replace(/:.*@/g, '@') : isGroup || isStatus ? message.key.participant.replace(/:.*@/g, '@') : chatId;
-              if (sender == options.sender && chatId == options.chatJid && filter(message)) {
-                zk.ev.off('messages.upsert', listener);
-                clearTimeout(interval);
-                resolve(message);
-              }
-            }
-          }
-        };
-        zk.ev.on('messages.upsert', listener);
-        if (timeout) {
-          interval = setTimeout(() => {
-            zk.ev.off('messages.upsert', listener);
-            reject(new Error('Timeout'));
-          }, timeout);
-        }
-      });
-    };
-
-    // fin fonctions utiles
-    /** ************* */
-    return zk;
-  }
-  let fichier = require.resolve(__filename);
-  fs.watchFile(fichier, () => {
-    fs.unwatchFile(fichier);
-    console.log(`mise à jour ${__filename}`);
-    delete require.cache[fichier];
-    require(fichier);
   });
-  main();
-}, 5000);
+}
 
-            
+if (connection == "close") {
+  let raisonDeconnexion = new boom_1.Boom(lastDisconnect?.error)?.output.statusCode;
+  if (raisonDeconnexion === baileys_1.DisconnectReason.badSession) {
+    console.log('Wrong session Id format, rescan again...');
+  } else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionClosed) {
+    console.log('!!! connexion fermée, reconnexion en cours ...');
+    main();
+  } else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionLost) {
+    console.log('connection error😞 ,,Alpha trying to reconnect... ');
+    main();
+  } else if (raisonDeconnexion === baileys_1.DisconnectReason?.connectionReplaced) {
+    console.log('connexion réplacée ,,, une sesssion est déjà ouverte veuillez la fermer svp !!!');
+  } else if (raisonDeconnexion === baileys_1.DisconnectReason.loggedOut) {
+    console.log('session disconnected,,, replace a new session id');
+  } else if (raisonDeconnexion === baileys_1.DisconnectReason.restartRequired) {
+    console.log('redémarrage en cours ▶️');
+    main();
+  } else {
+    console.log("redemarrage sur le coup de l'erreur  ", raisonDeconnexion);
+    // repondre("* Redémarrage du bot en cour ...*");
+
+    const { exec } = require("child_process");
+    exec("pm2 restart all");
+  }
+  // sleep(50000)
+  console.log("hum " + connection);
+  main(); // console.log(session)
+}
+
+// fin événement connexion
+// événement authentification 
+zk.ev.on("creds.update", saveCreds);
+
+// fin événement authentification 
+// fonctions utiles
+zk.downloadAndSaveMediaMessage = async (message, filename = '', attachExtension = true) => {
+  let quoted = message.msg ? message.msg : message;
+  let mime = (message.msg || message).mimetype || '';
+  let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0];
+  const stream = await baileys_1.downloadContentFromMessage(quoted, messageType);
+  let buffer = Buffer.from([]);
+  for await (const chunk of stream) {
+    buffer = Buffer.concat([buffer, chunk]);
+  }
+  let type = await FileType.fromBuffer(buffer);
+  let trueFileName = './' + filename + '.' + type.ext;
+  // save to file
+  await fs.writeFileSync(trueFileName, buffer);
+  return trueFileName;
+};
+
+zk.awaitForMessage = async (options = {}) => {
+  return new Promise((resolve, reject) => {
+    if (typeof options !== 'object') {
+      reject(new Error('Options must be an object'));
+    }
+    if (typeof options.sender !== 'string') {
+      reject(new Error('Sender must be a string'));
+    }
+    if (typeof options.chatJid !== 'string') {
+      reject(new Error('ChatJid must be a string'));
+    }
+    if (options.timeout && typeof options.timeout !== 'number') {
+      reject(new Error('Timeout must be a number'));
+    }
+    if (options.filter && typeof options.filter !== 'function') {
+      reject(new Error('Filter must be a function'));
+    }
+    const timeout = options?.timeout || undefined;
+    const filter = options?.filter || (() => true);
+    let interval;
+
+    /**
+     * 
+     * @param {{messages: Baileys.proto.IWebMessageInfo[], type: Baileys.MessageUpsertType}} data 
+     */
+    let listener = data => {
+      let { type, messages } = data;
+      if (type == "notify") {
+        for (let message of messages) {
+          const fromMe = message.key.fromMe;
+          const chatId = message.key.remoteJid;
+          const isGroup = chatId.endsWith('@g.us');
+          const isStatus = chatId == 'status@broadcast';
+          const sender = fromMe ? zk.user.id.replace(/:.*@/g, '@') : isGroup || isStatus ? message.key.participant.replace(/:.*@/g, '@') : chatId;
+          if (sender == options.sender && chatId == options.chatJid && filter(message)) {
+            zk.ev.off('messages.upsert', listener);
+            clearTimeout(interval);
+            resolve(message);
+          }
+        }
+      }
+    };
+    zk.ev.on('messages.upsert', listener);
+    if (timeout) {
+      interval = setTimeout(() => {
+        zk.ev.off('messages.upsert', listener);
+        reject(new Error('Timeout'));
+      }, timeout);
+    }
+  });
+};
+
+// fin fonctions utiles
+return zk;
+
+let fichier = require.resolve(__filename);
+fs.watchFile(fichier, () => {
+  fs.unwatchFile(fichier);
+  console.log(`mise à jour ${__filename}`);
+  delete require.cache[fichier];
+  require(fichier);
+});
+main();
