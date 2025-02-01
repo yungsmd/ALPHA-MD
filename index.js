@@ -1528,14 +1528,15 @@ const getGreeting = () => {
         };
 
         if (conf.DP.toLowerCase() === 'yes') {
-          await zk.sendMessage(zk.user.id, {
-                        text: `*Hello👋, ${getGreeting()},*
+          
+await zk.sendMessage(zk.user.id, {
+  text: `*Hello👋, ${getGreeting()},*
 ╭════⊷
 ║ *『 ${conf.BOT} 𝐢𝐬 𝐎𝐧𝐥𝐢𝐧𝐞』*
 ║    Creator: *${conf.OWNER_NAME}*
-║    Prefix : [  ${prefixe} ]
-║    Mode : ${md} mode
-║    Total Commands : ${evt.cm.length}
+║    Prefix : [ ${prefix} ]
+║    Mode : ${mode} mode
+║    Total Commands : ${commands.length}
 ╰═════════════════⊷
 
 ╭───◇
@@ -1543,9 +1544,19 @@ const getGreeting = () => {
 ┃ *Thank you for choosing*                      
 ┃  *${conf.BOT}*
 > Regards ${conf.OWNER_NAME} 
-╰═════════════════⊷ `
-          });
-        }
+╰═════════════════⊷`,
+  contextInfo: {
+    externalAdReply: {
+      title: "ALPHA-MD Online",
+      body: "Alpha-MD is now online",
+      mediaType: 1,
+      thumbnailUrl: conf.URL, // Using configured thumbnail URL
+      sourceUrl: conf.GURL, // Using configured source URL
+      showAdAttribution: true,
+    },
+  },
+});      
+
       } else if (connection == "close") {
         let raisonDeconnexion = new boom_1.Boom(lastDisconnect?.error)?.output.statusCode;
         if (raisonDeconnexion === baileys_1.DisconnectReason.badSession) {
