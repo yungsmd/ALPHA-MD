@@ -744,7 +744,7 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
       }
 
       
-const forbiddenWords = [
+/*const forbiddenWords = [
   'bitch',
   'fuck',
   'ass'
@@ -792,7 +792,7 @@ zk.ev.on("messages.upsert", async (m) => {
     }
     await zk.sendMessage(origineMessage, { delete: key });
   }
-});
+});*/
 
       
 
