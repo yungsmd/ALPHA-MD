@@ -1529,10 +1529,10 @@ const getGreeting = () => {
 
         if (conf.DP.toLowerCase() === 'yes') {
           await zk.sendMessage(zk.user.id, {
-            text: `*Hello👋, ${getGreeting()},*
+                        text: `*Hello👋, ${getGreeting()},*
 ╭════⊷
-║ *『${conf.BOT} 𝐢𝐬 𝐎𝐧𝐥𝐢𝐧𝐞』*
-║    Owner : ${conf.OWNER_NAME}
+║ *『 ${conf.BOT} 𝐢𝐬 𝐎𝐧𝐥𝐢𝐧𝐞』*
+║    Creator: *${conf.OWNER_NAME}*
 ║    Prefix : [  ${prefixe} ]
 ║    Mode : ${md} mode
 ║    Total Commands : ${evt.cm.length}
@@ -1541,8 +1541,8 @@ const getGreeting = () => {
 ╭───◇
 ┃
 ┃ *Thank you for choosing*                      
-┃  ${conf.BOT}
-> Regards ${conf.OWNER_NAME}
+┃  *${conf.BOT}*
+> Regards ${conf.OWNER_NAME} 
 ╰═════════════════⊷ `
           });
         }
@@ -1554,7 +1554,7 @@ const getGreeting = () => {
           console.log('!!! connexion fermée, reconnexion en cours ...');
           main();
         } else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionLost) {
-          console.log('connection error😞 ,,Bot trying to reconnect... ');
+          console.log('connection error😞 ,,Alpha trying to reconnect... ');
           main();
         } else if (raisonDeconnexion === baileys_1.DisconnectReason?.connectionReplaced) {
           console.log('connexion réplacée ,,, une sesssion est déjà ouverte veuillez la fermer svp !!!');
@@ -1668,3 +1668,5 @@ const getGreeting = () => {
   });
   main();
 }, 5000);
+
+            
