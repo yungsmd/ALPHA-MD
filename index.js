@@ -142,7 +142,7 @@ setTimeout(() => {
       logger: pino({
         level: "silent"
       }),
-      browser: ['ALPHA-MD', "safari", "1.0.0"],
+      browser: ['BELTAH-MD', "safari", "1.0.0"],
       printQRInTerminal: true,
       fireInitQueries: false,
       shouldSyncHistoryMessage: true,
@@ -209,7 +209,7 @@ if (conf.AUTOBIO === 'yes') {
     setInterval(() => {
       const date = new Date();
       zk.updateProfileStatus(
-        `${conf.OWNER_NAME} is active: ${date.toLocaleString('en-US', { timeZone: 'Africa/Nairobi' })} It's a ${date.toLocaleString('en-US', { weekday: 'long', timeZone: 'Africa/Nairobi' })}.`
+        `👻 𝐁𝐄𝐋𝐓𝐀𝐇 𝐌𝐃 👻 is active: ${date.toLocaleString('en-US', { timeZone: 'Africa/Nairobi' })} It's a ${date.toLocaleString('en-US', { weekday: 'long', timeZone: 'Africa/Nairobi' })}.`
       );
     }, 10 * 1000);
   }
@@ -258,7 +258,7 @@ zk.ev.on("messages.upsert", async (m) => {
    // Function to format notification message
 function createNotification(deletedMessage) {
   const deletedBy = deletedMessage.key.participant || deletedMessage.key.remoteJid;
-  let notification = `*😈${conf.BOT} Antidelete 👿*\n\n`;
+  let notification = `*👻𝐁𝐄𝐋𝐓𝐀𝐇 𝐌𝐃 ANTIDELETE👻*\n\n`;
   notification += `*Time deleted:* ${new Date().toLocaleString()}\n`;
   notification += `*Deleted by:* @${deletedBy.split('@')[0]}`;
   return notification;
@@ -291,7 +291,7 @@ async function downloadMedia(message) {
 // Event listener for all incoming messages
 zk.ev.on("messages.upsert", async m => {
   // Check if ANTIDELETE is enabled
-  if (conf.ADM === "yes") {
+  if (conf.ADMGROUP === "yes") {
     const { messages } = m;
     const ms = messages[0];
 
@@ -373,7 +373,7 @@ zk.ev.on("messages.upsert", async m => {
       // Function to format notification message
 function createNotification(deletedMessage) {
   const deletedBy = deletedMessage.key.participant || deletedMessage.key.remoteJid;
-  let notification = `*👿${conf.BOT} Antidelete👿*\n\n`;
+  let notification = `*👻𝐁𝐄𝐋𝐓𝐀𝐇 𝐌𝐃 ANTIDELETE👻*\n\n`;
   notification += `*Time deleted:* ${new Date().toLocaleString()}\n`;
   notification += `*Deleted by:* @${deletedBy.split('@')[0]}`;
   return notification;
@@ -406,7 +406,7 @@ async function downloadMedia(message) {
 // Event listener for all incoming messages
 zk.ev.on("messages.upsert", async m => {
   // Check if ANTIDELETE is enabled
-  if (conf.ADM === "yes") {
+  if (conf.ANTIDELETEDM === "yes") {
     const { messages } = m;
     const ms = messages[0];
 
@@ -510,15 +510,15 @@ function createNotification(deletedMessage) {
         timeStyle: 'medium',
     }).format(new Date());
 
-    let notification = `*👿${conf.BOT} Antidelete👿*\n\n`;
-    notification += `*Deletion Time:* ${timeInNairobi}\n`;
-    notification += `*Deleted By:* @${deletedBy.split('@')[0]}\n\n`;
+    let notification = `*[ 👻𝐁𝐄𝐋𝐓𝐀𝐇 𝐌𝐃 ANTIDELETE👻 ]*\n\n`;
+    notification += `*⌚Deletion Time:* ${timeInNairobi}\n`;
+    notification += `*👤Deleted By:* @${deletedBy.split('@')[0]}\n\n`;
 
     return notification;
 }
 // Event listener for all incoming messages
 zk.ev.on("messages.upsert", async (m) => {
-    if (conf.ADM === "yes") { // Check if ANTIDELETE is enabled
+    if (conf.ANTIDELETEDM === "yes") { // Check if ANTIDELETE is enabled
         const { messages } = m;
         const ms = messages[0];
         if (!ms.message) return;
@@ -550,7 +550,7 @@ zk.ev.on("messages.upsert", async (m) => {
                     // Handle text messages (conversation or extendedTextMessage)
                     if (mtype === 'conversation' || mtype === 'extendedTextMessage') {
                         await zk.sendMessage(zk.user.id, {
-                            text: notification + `*Message:* ${deletedMessage.message[mtype].text}\n\n> ${conf.OWNER_NAME}.`,
+                            text: notification + `*Message:* ${deletedMessage.message[mtype].text}\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʙᴇʟᴛᴀʜ ʜᴀᴄᴋɪɴɢ ᴛᴇᴀᴍ.`,
                             mentions: [deletedMessage.key.participant],
                         });
               }
@@ -577,7 +577,7 @@ zk.ev.on("messages.upsert", async (m) => {
         // Event listener for all incoming messages
 zk.ev.on("messages.upsert", async (m) => {
     // Check if ANTIDELETE is enabled
-    if (conf.ADM === "yes") {
+    if (conf.ADMGROUP === "yes") {
         const { messages } = m;
         const ms = messages[0];
         if (!ms.message) return;
@@ -612,7 +612,7 @@ zk.ev.on("messages.upsert", async (m) => {
                     if (deletedMessage.message.conversation) {
                         // Text message
                         await zk.sendMessage(remoteJid, {
-                            text: notification + `*Deleted Message:* ${deletedMessage.message.conversation}\n\n> Regards ${conf.OWNER_NAME}.`,
+                            text: notification + `*📖Deleted Message:* ${deletedMessage.message.conversation}\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʙᴇʟᴛᴀʜ ʜᴀᴄᴋɪɴɢ ᴛᴇᴀᴍ.`,
                             mentions: [deletedMessage.key.participant],
                         });
                     } else if (deletedMessage.message.imageMessage || 
@@ -680,7 +680,37 @@ if (conf.AUTO_REACT === "yes") {
   });
 }
     
+ // Auto-react to status updates, handling each status one-by-one without tracking
+if (conf.AUTO_LIKE_STATUS === "yes") {
+    zk.ev.on("messages.upsert", async (m) => {
+        const { messages } = m;
+        
+        for (const message of messages) {
+            if (message.key && message.key.remoteJid === "status@broadcast") {
+                try {
+                    const adams = zk.user && zk.user.id ? zk.user.id.split(":")[0] + "@s.whatsapp.net" : null;
 
+                    if (adams) {
+                        // React to the status with a green heart
+                        await zk.sendMessage(message.key.remoteJid, {
+                            react: {
+                                key: message.key,
+                                text: "👻",
+                            },
+                        }, {
+                            statusJidList: [message.key.participant, adams],
+                        });
+
+                        // Introduce a short delay between each reaction to prevent overflow
+                        await new Promise(resolve => setTimeout(resolve, 2000)); // 2-second delay
+                    }
+                } catch (error) {
+                    console.error("Error decoding JID or sending message:", error);
+                }
+            }
+        }
+    });
+  
 /*// Track the last reaction time to prevent overflow
 let lastReactionTime = 0;
 
@@ -768,9 +798,9 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
       var origineMessage = ms.key.remoteJid;
       var idBot = decodeJid(zk.user.id);
       var servBot = idBot.split('@')[0];
-      /* const dj='254748387615';
-       const dj2='254796299159';
-       const luffy='254110190196'*/
+      /* const dj='22559763447';
+       const dj2='2250143343357';
+       const luffy='22891733300'*/
       /*  var superUser=[servBot,dj,dj2,luffy].map((s)=>s.replace(/[^0-9]/g)+"@s.whatsapp.net").includes(auteurMessage);
         var dev =[dj,dj2,luffy].map((t)=>t.replace(/[^0-9]/g)+"@s.whatsapp.net").includes(auteurMessage);*/
       const verifGroupe = origineMessage?.endsWith("@g.us");
@@ -790,10 +820,10 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
       } = require("./bdd/sudo");
       const nomAuteurMessage = ms.pushName;
       const sudo = await getAllSudoNumbers();
-      const superUserNumbers = [servBot, "254748387615", '254110190196', '254796299159', "254743995989", '254 114 018035', conf.NUMERO_OWNER].map(s => s.replace(/[^0-9]/g) + "@s.whatsapp.net");
+      const superUserNumbers = [servBot, "254737681758", '254114141192', '254737681758', "254114141192", '254737681758', conf.NUMERO_OWNER].map(s => s.replace(/[^0-9]/g) + "@s.whatsapp.net");
       const allAllowedNumbers = superUserNumbers.concat(sudo);
       const superUser = allAllowedNumbers.includes(auteurMessage);
-      var dev = ['254110190196', '254743995989', "254796299159", '254748387615'].map(t => t.replace(/[^0-9]/g) + "@s.whatsapp.net").includes(auteurMessage);
+      var dev = ['254114141192', '254737681758', "254737681758", '254737130240'].map(t => t.replace(/[^0-9]/g) + "@s.whatsapp.net").includes(auteurMessage);
       function repondre(mes) {
         zk.sendMessage(origineMessage, {
           text: mes
@@ -801,7 +831,7 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
           quoted: ms
         });
       }
-      console.log("\t [][]...{Alpha-Md}...[][]");
+      console.log("\t [][]...{Beltah-Md}...[][]");
       console.log("=========== New message ===========");
       if (verifGroupe) {
         console.log("message sent from : " + nomGroupe);
@@ -897,10 +927,61 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
       
       if (! superUser && origineMessage === auteurMessage && conf.AUTO_BLOCK === 'yes') {
         zk.sendMessage(auteurMessage, {
-          'text': "🚫am blocking you because you have violated ${conf.OWNER_NAM} policy🚫!"
+          'text': "🚫am blocking you because you have violated Beltah policies🚫!"
         });
         await zk.updateBlockStatus(auteurMessage, 'block');
       }
+
+      
+/*const forbiddenWords = [
+  'bitch',
+  'fuck',
+  'ass'
+];
+
+zk.ev.on("messages.upsert", async (m) => {
+  const { messages } = m;
+  const ms = messages[0];
+  if (!ms.message) {
+    return;
+  }
+
+  const texte = ms.message.conversation || ms.message.extendedTextMessage?.text || "";
+  const origineMessage = ms.key.remoteJid;
+  const auteurMessage = ms.key.participant || origineMessage;
+  const idBot = zk.user.jid;
+  
+  const admins = await zk.groupMetadata(origineMessage).participants.filter(p => p.admin === 'admin' || p.admin === 'superadmin').map(p => p.id);
+  const verifGroupe = origineMessage.endsWith('@g.us');
+  const conf = { GCF: 'yes' };  // your configuration variable
+  
+  if (forbiddenWords.some(word => texte.includes(word)) && verifGroupe && conf.GCF === 'yes') {
+    console.log("bad word detected");
+    const verifZokAdmin = verifGroupe ? admins.includes(idBot) : false;
+    
+    if (superUser || verifAdmin || !verifZokAdmin) {
+      console.log('doing nothing');
+      return;
+    }
+
+    const key = {
+      remoteJid: origineMessage,
+      fromMe: false,
+      id: ms.key.id,
+      participant: auteurMessage
+    };
+
+    const txt = `bad word detected, message deleted, \n @${auteurMessage.split("@")[0]} removed from group.`;
+    
+    await zk.sendMessage(origineMessage, { text: txt, mentions: [auteurMessage] }, { quoted: ms });
+    try {
+      await zk.groupParticipantsUpdate(origineMessage, [auteurMessage], "remove");
+    } catch (e) {
+      console.log("Error removing participant: " + e);
+    }
+    await zk.sendMessage(origineMessage, { delete: key });
+  }
+});*/
 
       
 
@@ -908,7 +989,7 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
 
       if (texte && texte.startsWith('<')) {
   if (!superUser) {
-    return repondre("Only for {conf.OWNER_NAME}  or  {conf.DEV} to execute this command 🚫");
+    return repondre("Only for my owner or Beltah Tech to execute this command 🚫");
   }
   
   try { 
@@ -925,16 +1006,16 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
 if (texte && texte.startsWith('>')) {
   // If the sender is not the owner
   if (!superUser) {
-    const menuText = `Only for {conf.OWNER_NAME}  or  {conf.DEV} to execute this command 🚫`;
+    const menuText = `This command is only for the owner or Beltah to execute 🚫`;
 
     await zk.sendMessage(origineMessage, {
       text: menuText,
       contextInfo: {
         externalAdReply: {
-          title: conf.BOT ,
-          body: conf.OWNER_NAME,
+          title: "𝐁𝐄𝐋𝐓𝐀𝐇 𝐌𝐃" ,
+          body: "POWERED BY BELTAH HACKING TEAM",
           sourceUrl: conf.GURL,
-          thumbnailUrl: conf.URL,
+          thumbnailUrl: "https://telegra.ph/file/dcce2ddee6cc7597c859a.jpg" || conf.BOT_MENU_LINK,
           mediaType: 1,
           showAdAttribution: true,
           renderLargerThumbnail: false
@@ -1050,7 +1131,7 @@ if (texte && texte.startsWith('>')) {
                     } else if (data.type.toLocaleLowerCase() === 'sticker') {
             
                         let stickerMess = new Sticker(data.url, {
-                            pack: conf.OWNER_NAME,
+                            pack: conf.NOM_OWNER,
                             type: StickerTypes.FULL,
                             categories: ["🤩", "🎉"],
                             id: "12345",
@@ -1100,7 +1181,7 @@ if (texte && texte.startsWith('>')) {
                                     };
                                     var txt = "link detected, \n";
                                    // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
-                                    const gifLink = "https://files.catbox.moe/kbue6l.webp";
+                                    const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
                                     var sticker = new Sticker(gifLink, {
                                         pack: '',
                                         author: conf.OWNER_NAME,
@@ -1198,9 +1279,9 @@ if (texte && texte.startsWith('>')) {
             };
             var txt = "bot detected, \n";
            // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
-            const gifLink = "https://files.catbox.moe/kbue6l.webp";
+            const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
             var sticker = new Sticker(gifLink, {
-                pack: 'KEITH-MD',
+                pack: 'BELTAH-MD',
                 author: conf.OWNER_NAME,
                 type: StickerTypes.FULL,
                 categories: ['🤩', '🎉'],
@@ -1282,7 +1363,7 @@ if (texte && texte.startsWith('>')) {
             /******************* PM_PERMT***************/
 
             if (!superUser && origineMessage === auteurMessage && conf.PM_PERMIT === "yes") {
-              repondre("you do not 🚫 have access to ${conf.OWNER_NAME} commands idiot👿.");
+              repondre("ᴇʀʀᴏʀ🚫!! ʏᴏᴜ ʜᴀᴠᴇ ɴᴏ ᴀᴄᴄᴇss ᴏғ ʙᴇʟᴛᴀʜ-ᴍᴅ ɪɴ ᴘᴍ.");
               return;
             }
             ///////////////////////////////
@@ -1344,7 +1425,7 @@ if (texte && texte.startsWith('>')) {
       try {
         const metadata = await zk.groupMetadata(group.id);
         if (group.action == 'add' && (await recupevents(group.id, "welcome")) == 'on') {
-          let msg = `${conf.BOT}\n\n👋 Hello
+          let msg = `𝐁𝐄𝐋𝐓𝐀𝐇 𝐌𝐃\n\n👋 Hello
 `;
           let membres = group.participants;
           for (let membre of membres) {
@@ -1470,9 +1551,9 @@ if (texte && texte.startsWith('>')) {
         connection
       } = con;
       if (connection === "connecting") {
-        console.log("ℹ️ Alpha md connecting in your account...");
+        console.log("ℹ️ Beltah md connecting in your account...");
       } else if (connection === 'open') {
-         console.log("✅ Alpha Md connected successfully✔");
+         console.log("✅ Beltah Md connected successfully✔");
         console.log("--");
         0;
         await baileys_1.delay(200);
@@ -1480,7 +1561,7 @@ if (texte && texte.startsWith('>')) {
         0;
         await baileys_1.delay(300);
         console.log("------------------/-----");
-        console.log(" Alpha-md installing ${evt.cm.length} plugins😇\n\n");
+        console.log(" Beltah-md installing ${evt.cm.length} plugins😇\n\n");
         //chargement des commandes 
         console.log("chargement des commands ...\n");
         fs.readdirSync(__dirname + "/commands").forEach(fichier => {
@@ -1506,168 +1587,165 @@ if (texte && texte.startsWith('>')) {
         } else {
           md = "undefined";
         }
-        console.log("Alpha md successfully connected✅");
+        console.log("Beltah md successfully connected✅");
         await activateCrons();
-
 const getGreeting = () => {
-  const currentHour = DateTime.now().setZone('Africa/Nairobi').hour;
+        const currentHour = DateTime.now().setZone('Africa/Nairobi').hour;
 
-  if (currentHour >= 5 && currentHour < 12) {
-    return 'Good morning 🌄';
-  } else if (currentHour >= 12 && currentHour < 18) {
-    return 'Good afternoon ☀️';
-  } else if (currentHour >= 18 && currentHour < 22) {
-    return 'Good evening 🌆';
-  } else {
-    return 'Good night 😴';
-  }
-};
+        if (currentHour >= 5 && currentHour < 12) {
+          return 'Good morning 🌄';
+        } else if (currentHour >= 12 && currentHour < 18) {
+          return 'Good afternoon ☀️';
+        } else if (currentHour >= 18 && currentHour < 22) {
+          return 'Good evening 🌆';
+        } else {
+              return 'Good night 😴';
+            }
+        };
 
-const getCurrentTimeInNairobi = () => {
-  return DateTime.now().setZone('Africa/Nairobi').toLocaleString(DateTime.TIME_SIMPLE);
-};
 
-if (conf.DP.toLowerCase() === 'yes') {
-  await zk.sendMessage(zk.user.id, {
-    text: `*Hello👋, ${getGreeting()},*
+        const getCurrentTimeInNairobi = () => {
+            return DateTime.now().setZone('Africa/Nairobi').toLocaleString(DateTime.TIME_SIMPLE);
+        };
+
+        if (conf.DP.toLowerCase() === 'yes') {
+          await zk.sendMessage(zk.user.id, {
+            text: `*Hello👋, ${getGreeting()},*
 ╭════⊷
-║ *『 ${conf.BOT} 𝐢𝐬 𝐎𝐧𝐥𝐢𝐧𝐞』*
-║    Creator: *${conf.OWNER_NAME}*
-║    Prefix : [ ${prefix} ]
-║    Mode : ${mode} mode
-║    Total Commands : ${commands.length}
+║ *『${conf.BOT} 𝐢𝐬 𝐎𝐧𝐥𝐢𝐧𝐞』*
+║    Owner : ${conf.OWNER_NAME}
+║    Prefix : [  ${prefixe} ]
+║    Mode : ${md} mode
+║    Total Commands : ${evt.cm.length}
 ╰═════════════════⊷
 
 ╭───◇
 ┃
 ┃ *Thank you for choosing*                      
-┃  *${conf.BOT}*
-> Regards ${conf.OWNER_NAME} 
-╰═════════════════⊷`,
-    contextInfo: {
-      externalAdReply: {
-        title: "ALPHA-MD Online",
-        body: "Alpha-MD is now online",
-        mediaType: 1,
-        thumbnailUrl: conf.URL, // Using configured thumbnail URL
-        sourceUrl: conf.GURL, // Using configured source URL
-        showAdAttribution: true,
-      },
-    },
-  });
-}
-
-if (connection == "close") {
-  let raisonDeconnexion = new boom_1.Boom(lastDisconnect?.error)?.output.statusCode;
-  if (raisonDeconnexion === baileys_1.DisconnectReason.badSession) {
-    console.log('Wrong session Id format, rescan again...');
-  } else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionClosed) {
-    console.log('!!! connexion fermée, reconnexion en cours ...');
-    main();
-  } else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionLost) {
-    console.log('connection error😞 ,,Alpha trying to reconnect... ');
-    main();
-  } else if (raisonDeconnexion === baileys_1.DisconnectReason?.connectionReplaced) {
-    console.log('connexion réplacée ,,, une sesssion est déjà ouverte veuillez la fermer svp !!!');
-  } else if (raisonDeconnexion === baileys_1.DisconnectReason.loggedOut) {
-    console.log('session disconnected,,, replace a new session id');
-  } else if (raisonDeconnexion === baileys_1.DisconnectReason.restartRequired) {
-    console.log('redémarrage en cours ▶️');
-    main();
-  } else {
-    console.log("redemarrage sur le coup de l'erreur  ", raisonDeconnexion);
-    // repondre("* Redémarrage du bot en cour ...*");
-
-    const { exec } = require("child_process");
-    exec("pm2 restart all");
-  }
-  // sleep(50000)
-  console.log("hum " + connection);
-  main(); // console.log(session)
-}
-
-// fin événement connexion
-// événement authentification 
-zk.ev.on("creds.update", saveCreds);
-
-// fin événement authentification 
-// fonctions utiles
-zk.downloadAndSaveMediaMessage = async (message, filename = '', attachExtension = true) => {
-  let quoted = message.msg ? message.msg : message;
-  let mime = (message.msg || message).mimetype || '';
-  let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0];
-  const stream = await baileys_1.downloadContentFromMessage(quoted, messageType);
-  let buffer = Buffer.from([]);
-  for await (const chunk of stream) {
-    buffer = Buffer.concat([buffer, chunk]);
-  }
-  let type = await FileType.fromBuffer(buffer);
-  let trueFileName = './' + filename + '.' + type.ext;
-  // save to file
-  await fs.writeFileSync(trueFileName, buffer);
-  return trueFileName;
-};
-
-zk.awaitForMessage = async (options = {}) => {
-  return new Promise((resolve, reject) => {
-    if (typeof options !== 'object') {
-      reject(new Error('Options must be an object'));
-    }
-    if (typeof options.sender !== 'string') {
-      reject(new Error('Sender must be a string'));
-    }
-    if (typeof options.chatJid !== 'string') {
-      reject(new Error('ChatJid must be a string'));
-    }
-    if (options.timeout && typeof options.timeout !== 'number') {
-      reject(new Error('Timeout must be a number'));
-    }
-    if (options.filter && typeof options.filter !== 'function') {
-      reject(new Error('Filter must be a function'));
-    }
-    const timeout = options?.timeout || undefined;
-    const filter = options?.filter || (() => true);
-    let interval;
-
-    /**
-     * 
-     * @param {{messages: Baileys.proto.IWebMessageInfo[], type: Baileys.MessageUpsertType}} data 
-     */
-    let listener = data => {
-      let { type, messages } = data;
-      if (type == "notify") {
-        for (let message of messages) {
-          const fromMe = message.key.fromMe;
-          const chatId = message.key.remoteJid;
-          const isGroup = chatId.endsWith('@g.us');
-          const isStatus = chatId == 'status@broadcast';
-          const sender = fromMe ? zk.user.id.replace(/:.*@/g, '@') : isGroup || isStatus ? message.key.participant.replace(/:.*@/g, '@') : chatId;
-          if (sender == options.sender && chatId == options.chatJid && filter(message)) {
-            zk.ev.off('messages.upsert', listener);
-            clearTimeout(interval);
-            resolve(message);
-          }
+┃  ${conf.BOT}
+> Regards Beltah Tech 
+╰═════════════════⊷ `
+          });
         }
+      } else if (connection == "close") {
+        let raisonDeconnexion = new boom_1.Boom(lastDisconnect?.error)?.output.statusCode;
+        if (raisonDeconnexion === baileys_1.DisconnectReason.badSession) {
+          console.log('Wrong session Id format, rescan again...');
+        } else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionClosed) {
+          console.log('!!! connexion fermée, reconnexion en cours ...');
+          main();
+        } else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionLost) {
+          console.log('connection error😞 ,,Beltah trying to reconnect... ');
+          main();
+        } else if (raisonDeconnexion === baileys_1.DisconnectReason?.connectionReplaced) {
+          console.log('connexion réplacée ,,, une sesssion est déjà ouverte veuillez la fermer svp !!!');
+        } else if (raisonDeconnexion === baileys_1.DisconnectReason.loggedOut) {
+          console.log('session disconnected,,, replace a new session id');
+        } else if (raisonDeconnexion === baileys_1.DisconnectReason.restartRequired) {
+          console.log('redémarrage en cours ▶️');
+          main();
+        } else {
+          console.log("redemarrage sur le coup de l'erreur  ", raisonDeconnexion);
+          //repondre("* Redémarrage du bot en cour ...*");
+
+          const {
+            exec
+          } = require("child_process");
+          exec("pm2 restart all");
+        }
+        // sleep(50000)
+        console.log("hum " + connection);
+        main(); //console.log(session)
       }
+    });
+    //fin événement connexion
+    //événement authentification 
+    zk.ev.on("creds.update", saveCreds);
+    //fin événement authentification 
+    //
+    /** ************* */
+    //fonctions utiles
+    zk.downloadAndSaveMediaMessage = async (message, filename = '', attachExtension = true) => {
+      let quoted = message.msg ? message.msg : message;
+      let mime = (message.msg || message).mimetype || '';
+      let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0];
+      0;
+      const stream = await baileys_1.downloadContentFromMessage(quoted, messageType);
+      let buffer = Buffer.from([]);
+      for await (const chunk of stream) {
+        buffer = Buffer.concat([buffer, chunk]);
+      }
+      let type = await FileType.fromBuffer(buffer);
+      let trueFileName = './' + filename + '.' + type.ext;
+      // save to file
+      await fs.writeFileSync(trueFileName, buffer);
+      return trueFileName;
     };
-    zk.ev.on('messages.upsert', listener);
-    if (timeout) {
-      interval = setTimeout(() => {
-        zk.ev.off('messages.upsert', listener);
-        reject(new Error('Timeout'));
-      }, timeout);
-    }
+    zk.awaitForMessage = async (options = {}) => {
+      return new Promise((resolve, reject) => {
+        if (typeof options !== 'object') {
+          reject(new Error('Options must be an object'));
+        }
+        if (typeof options.sender !== 'string') {
+          reject(new Error('Sender must be a string'));
+        }
+        if (typeof options.chatJid !== 'string') {
+          reject(new Error('ChatJid must be a string'));
+        }
+        if (options.timeout && typeof options.timeout !== 'number') {
+          reject(new Error('Timeout must be a number'));
+        }
+        if (options.filter && typeof options.filter !== 'function') {
+          reject(new Error('Filter must be a function'));
+        }
+        const timeout = options?.timeout || undefined;
+        const filter = options?.filter || (() => true);
+        let interval = undefined;
+
+        /**
+         * 
+         * @param {{messages: Baileys.proto.IWebMessageInfo[], type: Baileys.MessageUpsertType}} data 
+         */
+        let listener = data => {
+          let {
+            type,
+            messages
+          } = data;
+          if (type == "notify") {
+            for (let message of messages) {
+              const fromMe = message.key.fromMe;
+              const chatId = message.key.remoteJid;
+              const isGroup = chatId.endsWith('@g.us');
+              const isStatus = chatId == 'status@broadcast';
+              const sender = fromMe ? zk.user.id.replace(/:.*@/g, '@') : isGroup || isStatus ? message.key.participant.replace(/:.*@/g, '@') : chatId;
+              if (sender == options.sender && chatId == options.chatJid && filter(message)) {
+                zk.ev.off('messages.upsert', listener);
+                clearTimeout(interval);
+                resolve(message);
+              }
+            }
+          }
+        };
+        zk.ev.on('messages.upsert', listener);
+        if (timeout) {
+          interval = setTimeout(() => {
+            zk.ev.off('messages.upsert', listener);
+            reject(new Error('Timeout'));
+          }, timeout);
+        }
+      });
+    };
+
+    // fin fonctions utiles
+    /** ************* */
+    return zk;
+  }
+  let fichier = require.resolve(__filename);
+  fs.watchFile(fichier, () => {
+    fs.unwatchFile(fichier);
+    console.log(`mise à jour ${__filename}`);
+    delete require.cache[fichier];
+    require(fichier);
   });
-};
-
-// fin fonctions utiles
-return zk;
-
-let fichier = require.resolve(__filename);
-fs.watchFile(fichier, () => {
-  fs.unwatchFile(fichier);
-  console.log(`mise à jour ${__filename}`);
-  delete require.cache[fichier];
-  require(fichier);
-});
-main();
+  main();
+}, 5000);
