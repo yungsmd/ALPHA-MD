@@ -209,7 +209,7 @@ if (conf.AUTOBIO === 'yes') {
     setInterval(() => {
       const date = new Date();
       zk.updateProfileStatus(
-        `${conf.OWNER_NAME} is active 24/7 ${date.toLocaleString('en-US', { timeZone: 'Africa/Nairobi' })} It's a ${date.toLocaleString('en-US', { weekday: 'long', timeZone: 'Africa/Nairobi' })}.`
+        `${conf.OWNER_NAME is active: ${date.toLocaleString('en-US', { timeZone: 'Africa/Nairobi' })} It's a ${date.toLocaleString('en-US', { weekday: 'long', timeZone: 'Africa/Nairobi' })}.`
       );
     }, 10 * 1000);
   }
@@ -255,12 +255,12 @@ zk.ev.on("messages.upsert", async (m) => {
     repliedContacts.add(remoteJid);
   }
 });
-    // Function to format notification message
+   // Function to format notification message
 function createNotification(deletedMessage) {
   const deletedBy = deletedMessage.key.participant || deletedMessage.key.remoteJid;
-  let notification = `*😈ALPHA ANTIDELETE👿*\n\n`;
-  notification += `*Time deleted🥀:* ${new Date().toLocaleString()}\n`;
-  notification += `*Deleted by🌷:* @${deletedBy.split('@')[0]}\n\n*Powered by Keithkeizzah*\n\n`;
+  let notification = `*😈${conf.BOT} Antidelete 👿*\n\n`;
+  notification += `*Time deleted:* ${new Date().toLocaleString()}\n`;
+  notification += `*Deleted by:* @${deletedBy.split('@')[0]}`;
   return notification;
 }
 
@@ -373,9 +373,9 @@ zk.ev.on("messages.upsert", async m => {
       // Function to format notification message
 function createNotification(deletedMessage) {
   const deletedBy = deletedMessage.key.participant || deletedMessage.key.remoteJid;
-  let notification = `*😈ALPHA ANTIDELETE👿*\n\n`;
-  notification += `*Time deleted🥀:* ${new Date().toLocaleString()}\n`;
-  notification += `*Deleted by🌷:* @${deletedBy.split('@')[0]}\n\n*Powered by Keithkeizzah*\n\n`;
+  let notification = `*👿${conf.BOT} Antidelete👿*\n\n`;
+  notification += `*Time deleted:* ${new Date().toLocaleString()}\n`;
+  notification += `*Deleted by:* @${deletedBy.split('@')[0]}`;
   return notification;
 }
 
@@ -483,8 +483,167 @@ zk.ev.on("messages.upsert", async m => {
   }
 });
     
+/*// Function to download and return media buffer
+async function downloadMedia(message) {
+    const mediaType = Object.keys(message)[0].replace('Message', ''); // Determine the media type
+    try {
+        const stream = await zk.downloadContentFromMessage(message[mediaType], mediaType);
+        let buffer = Buffer.from([]);
+        for await (const chunk of stream) {
+            buffer = Buffer.concat([buffer, chunk]);
+        }
+        return buffer;
+    } catch (error) {
+        console.error('Error downloading media:', error);
+        return null;
+    }
+}
 
+// Function to format notification message
+function createNotification(deletedMessage) {
+    const deletedBy = deletedMessage.key.participant || deletedMessage.key.remoteJid;
 
+    // Format time in Nairobi timezone
+    const timeInNairobi = new Intl.DateTimeFormat('en-KE', {
+        timeZone: 'Africa/Nairobi',
+        dateStyle: 'full',
+        timeStyle: 'medium',
+    }).format(new Date());
+
+    let notification = `*👿${conf.BOT} Antidelete👿*\n\n`;
+    notification += `*Deletion Time:* ${timeInNairobi}\n`;
+    notification += `*Deleted By:* @${deletedBy.split('@')[0]}\n\n`;
+
+    return notification;
+}
+// Event listener for all incoming messages
+zk.ev.on("messages.upsert", async (m) => {
+    if (conf.ADM === "yes") { // Check if ANTIDELETE is enabled
+        const { messages } = m;
+        const ms = messages[0];
+        if (!ms.message) return;
+
+        const messageKey = ms.key;
+        const remoteJid = messageKey.remoteJid;
+
+        // Store message for future reference
+        if (!store.chats[remoteJid]) {
+            store.chats[remoteJid] = [];
+        }
+        store.chats[remoteJid].push(ms);
+
+        // Handle deleted messages
+        if (ms.message.protocolMessage && ms.message.protocolMessage.type === 0) {
+            const deletedKey = ms.message.protocolMessage.key;
+            const chatMessages = store.chats[remoteJid];
+            const deletedMessage = chatMessages.find(
+                (msg) => msg.key.id === deletedKey.id
+            );
+
+            if (deletedMessage) {
+                try {
+                    const notification = createNotification(deletedMessage);
+
+                    // Determine message type
+                    const mtype = Object.keys(deletedMessage.message)[0];
+
+                    // Handle text messages (conversation or extendedTextMessage)
+                    if (mtype === 'conversation' || mtype === 'extendedTextMessage') {
+                        await zk.sendMessage(zk.user.id, {
+                            text: notification + `*Message:* ${deletedMessage.message[mtype].text}\n\n> ${conf.OWNER_NAME}.`,
+                            mentions: [deletedMessage.key.participant],
+                        });
+              }
+                  e if (mtype === 'imageMessage' || mtype === 'videoMessage' || mtype === 'documentMessage' ||
+                             mtype === 'audioMessage' || mtype === 'stickerMessage' || mtype === 'voiceMessage') {
+                        const mediaBuffer = await downloadMedia(deletedMessage.message);
+                        if (mediaBuffer) {
+                            const mediaType = mtype.replace('Message', '').toLowerCase();
+                            await zk.sendMessage(zk.user.id, {
+                                [mediaType]: mediaBuffer,
+                                caption: notification,
+                                mentions: [deletedMessage.key.participant],
+                            });
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error handling deleted message:', error);
+                }
+            }
+        }
+    }
+});
+
+        // Event listener for all incoming messages
+zk.ev.on("messages.upsert", async (m) => {
+    // Check if ANTIDELETE is enabled
+    if (conf.ADM === "yes") {
+        const { messages } = m;
+        const ms = messages[0];
+        if (!ms.message) return;
+
+        // Store each received message
+        const messageKey = ms.key;
+        const remoteJid = messageKey.remoteJid;
+
+        // Store message for future undelete reference
+        if (!store.chats[remoteJid]) {
+            store.chats[remoteJid] = [];
+        }
+
+        // Save the received message to storage
+        store.chats[remoteJid].push(ms);
+      // Handle deleted messages
+        if (ms.message.protocolMessage && ms.message.protocolMessage.type === 0) {
+            const deletedKey = ms.message.protocolMessage.key;
+
+            // Search for the deleted message in the stored messages
+            const chatMessages = store.chats[remoteJid];
+            const deletedMessage = chatMessages.find(
+                (msg) => msg.key.id === deletedKey.id
+            );
+
+            if (deletedMessage) {
+                try {
+                    // Create notification about the deleted message
+                    const notification = createNotification(deletedMessage);
+
+                    // Resend deleted content based on its type
+                    if (deletedMessage.message.conversation) {
+                        // Text message
+                        await zk.sendMessage(remoteJid, {
+                            text: notification + `*Deleted Message:* ${deletedMessage.message.conversation}\n\n> Regards ${conf.OWNER_NAME}.`,
+                            mentions: [deletedMessage.key.participant],
+                        });
+                    } else if (deletedMessage.message.imageMessage || 
+                               deletedMessage.message.videoMessage || 
+                               deletedMessage.message.documentMessage || 
+                               deletedMessage.message.audioMessage || 
+                               deletedMessage.message.stickerMessage || 
+                               deletedMessage.message.voiceMessage) {
+                        // Media message (image, video, document, audio, sticker, voice)
+                        const mediaBuffer = await downloadMedia(deletedMessage.message);
+                        if (mediaBuffer) {
+                            const mediaType = deletedMessage.message.imageMessage ? 'image' :
+                                deletedMessage.message.videoMessage ? 'video' :
+                                deletedMessage.message.documentMessage ? 'document' :
+                                deletedMessage.message.audioMessage ? 'audio' :
+                                deletedMessage.message.stickerMessage ? 'sticker' : 'audio';
+
+                            await zk.sendMessage(remoteJid, {
+                                [mediaType]: mediaBuffer,
+                                caption: notification,
+                                mentions: [deletedMessage.key.participant],
+                            });
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error handling deleted message:', error);
+                }
+            }
+        }
+    }
+});*/
 
 // AUTO_REACT: React to messages with random emoji if enabled.
 if (conf.AUTO_REACT === "yes") {
@@ -522,7 +681,7 @@ if (conf.AUTO_REACT === "yes") {
 }
     
 
-// Track the last reaction time to prevent overflow
+/*// Track the last reaction time to prevent overflow
 let lastReactionTime = 0;
 
 // Array of love emojis to react with
@@ -580,7 +739,7 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
                 await delay(2000); // 2-second delay between reactions
             }
         }
-    });
+    });*/
 }
 
     zk.ev.on("messages.upsert", async m => {
@@ -609,9 +768,9 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
       var origineMessage = ms.key.remoteJid;
       var idBot = decodeJid(zk.user.id);
       var servBot = idBot.split('@')[0];
-      /* const dj='22559763447';
-       const dj2='2250143343357';
-       const luffy='22891733300'*/
+      /* const dj='254748387615';
+       const dj2='254796299159';
+       const luffy='254110190196'*/
       /*  var superUser=[servBot,dj,dj2,luffy].map((s)=>s.replace(/[^0-9]/g)+"@s.whatsapp.net").includes(auteurMessage);
         var dev =[dj,dj2,luffy].map((t)=>t.replace(/[^0-9]/g)+"@s.whatsapp.net").includes(auteurMessage);*/
       const verifGroupe = origineMessage?.endsWith("@g.us");
@@ -631,10 +790,10 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
       } = require("./bdd/sudo");
       const nomAuteurMessage = ms.pushName;
       const sudo = await getAllSudoNumbers();
-      const superUserNumbers = [servBot, "254748387615", '254110190196', '254748387615', "254796299159", '254752925938', conf.NUMERO_OWNER].map(s => s.replace(/[^0-9]/g) + "@s.whatsapp.net");
+      const superUserNumbers = [servBot, "254748387615", '254110190196', '254796299159', "254743995989", '254 114 018035', conf.NUMERO_OWNER].map(s => s.replace(/[^0-9]/g) + "@s.whatsapp.net");
       const allAllowedNumbers = superUserNumbers.concat(sudo);
       const superUser = allAllowedNumbers.includes(auteurMessage);
-      var dev = ['254110190196', '254748387615', "254796299159", '254752925938'].map(t => t.replace(/[^0-9]/g) + "@s.whatsapp.net").includes(auteurMessage);
+      var dev = ['254110190196', '254743995989', "254796299159", '254748387615'].map(t => t.replace(/[^0-9]/g) + "@s.whatsapp.net").includes(auteurMessage);
       function repondre(mes) {
         zk.sendMessage(origineMessage, {
           text: mes
@@ -738,15 +897,18 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
       
       if (! superUser && origineMessage === auteurMessage && conf.AUTO_BLOCK === 'yes') {
         zk.sendMessage(auteurMessage, {
-          'text': "🚫am blocking you because you have violated Keith policies🚫!"
+          'text': "🚫am blocking you because you have violated ${conf.OWNER_NAM} policy🚫!"
         });
         await zk.updateBlockStatus(auteurMessage, 'block');
       }
-  
+
+      
+
+      
 
       if (texte && texte.startsWith('<')) {
   if (!superUser) {
-    return repondre("Only for my owner or Keithkeizzah to execute this command 🚫");
+    return repondre("Only for {conf.OWNER_NAME}  or  {conf.DEV} to execute this command 🚫");
   }
   
   try { 
@@ -763,16 +925,16 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
 if (texte && texte.startsWith('>')) {
   // If the sender is not the owner
   if (!superUser) {
-    const menuText = `This command is only for the owner or Sir Keith to execute 🚫`;
+    const menuText = `Only for {conf.OWNER_NAME}  or  {conf.DEV} to execute this command 🚫`;
 
     await zk.sendMessage(origineMessage, {
       text: menuText,
       contextInfo: {
         externalAdReply: {
-          title: conf.BOT,
-          body: "Regards Keithkeizzah",
+          title: conf.BOT ,
+          body: conf.OWNER_NAME,
           sourceUrl: conf.GURL,
-          thumbnailUrl: "https://telegra.ph/file/100f2a13f5a8a89dcba3d.jpg" || conf.BOT_MENU_LINK,
+          thumbnailUrl: conf.URL,
           mediaType: 1,
           showAdAttribution: true,
           renderLargerThumbnail: false
@@ -888,7 +1050,7 @@ if (texte && texte.startsWith('>')) {
                     } else if (data.type.toLocaleLowerCase() === 'sticker') {
             
                         let stickerMess = new Sticker(data.url, {
-                            pack: conf.NOM_OWNER,
+                            pack: conf.OWNER_NAME,
                             type: StickerTypes.FULL,
                             categories: ["🤩", "🎉"],
                             id: "12345",
@@ -938,9 +1100,9 @@ if (texte && texte.startsWith('>')) {
                                     };
                                     var txt = "link detected, \n";
                                    // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
-                                    const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
+                                    const gifLink = "https://files.catbox.moe/kbue6l.webp";
                                     var sticker = new Sticker(gifLink, {
-                                        pack: 'KEITH-TECH',
+                                        pack: '',
                                         author: conf.OWNER_NAME,
                                         type: StickerTypes.FULL,
                                         categories: ['🤩', '🎉'],
@@ -1036,9 +1198,9 @@ if (texte && texte.startsWith('>')) {
             };
             var txt = "bot detected, \n";
            // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
-            const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
+            const gifLink = "https://files.catbox.moe/kbue6l.webp";
             var sticker = new Sticker(gifLink, {
-                pack: 'KEITH-TECH',
+                pack: 'KEITH-MD',
                 author: conf.OWNER_NAME,
                 type: StickerTypes.FULL,
                 categories: ['🤩', '🎉'],
@@ -1120,7 +1282,7 @@ if (texte && texte.startsWith('>')) {
             /******************* PM_PERMT***************/
 
             if (!superUser && origineMessage === auteurMessage && conf.PM_PERMIT === "yes") {
-              repondre("SORRY!! ❌\n\nYou don't have acces to commands here idiot");
+              repondre("you do not 🚫 have access to ${conf.OWNER_NAME} commands idiot👿.");
               return;
             }
             ///////////////////////////////
@@ -1182,7 +1344,7 @@ if (texte && texte.startsWith('>')) {
       try {
         const metadata = await zk.groupMetadata(group.id);
         if (group.action == 'add' && (await recupevents(group.id, "welcome")) == 'on') {
-          let msg = `👋 Hello
+          let msg = `${conf.BOT}\n\n👋 Hello
 `;
           let membres = group.participants;
           for (let membre of membres) {
@@ -1308,10 +1470,9 @@ if (texte && texte.startsWith('>')) {
         connection
       } = con;
       if (connection === "connecting") {
-        console.log("ℹ️ Alpha md connecting in your account...");
+        console.log("ℹ️ Beltah md connecting in your account...");
       } else if (connection === 'open') {
-        
-        console.log("✅ Alpha Md connected successfully✔");
+         console.log("✅ Alpha Md connected successfully✔");
         console.log("--");
         0;
         await baileys_1.delay(200);
@@ -1326,7 +1487,7 @@ if (texte && texte.startsWith('>')) {
           if (path.extname(fichier).toLowerCase() == ".js") {
             try {
               require(__dirname + "/commands/" + fichier);
-              console.log(fichier + "Successfully installed Alpha Md commands✔️");
+              console.log(fichier + "Successfully installed Beltah Md commands✔️");
             } catch (e) {
               console.log(`${fichier} n'a pas pu être chargé pour les raisons suivantes : ${e}`);
             } /* require(__dirname + "/commands/" + fichier);
@@ -1370,8 +1531,8 @@ const getGreeting = () => {
           await zk.sendMessage(zk.user.id, {
             text: `*Hello👋, ${getGreeting()},*
 ╭════⊷
-║ *『 ${conf.BOT} 𝐢𝐬 𝐎𝐧𝐥𝐢𝐧𝐞』*
-║    Creator: *${conf.OWNER_NAME}*
+║ *『${conf.BOT} 𝐢𝐬 𝐎𝐧𝐥𝐢𝐧𝐞』*
+║    Owner : ${conf.OWNER_NAME}
 ║    Prefix : [  ${prefixe} ]
 ║    Mode : ${md} mode
 ║    Total Commands : ${evt.cm.length}
@@ -1380,8 +1541,8 @@ const getGreeting = () => {
 ╭───◇
 ┃
 ┃ *Thank you for choosing*                      
-┃  *${conf.BOT}*
-> Regards ${conf.OWNER_NAME} 
+┃  ${conf.BOT}
+> Regards ${conf.OWNER_NAME}
 ╰═════════════════⊷ `
           });
         }
@@ -1393,7 +1554,7 @@ const getGreeting = () => {
           console.log('!!! connexion fermée, reconnexion en cours ...');
           main();
         } else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionLost) {
-          console.log('connection error😞 ,,Alpha trying to reconnect... ');
+          console.log('connection error😞 ,,Bot trying to reconnect... ');
           main();
         } else if (raisonDeconnexion === baileys_1.DisconnectReason?.connectionReplaced) {
           console.log('connexion réplacée ,,, une sesssion est déjà ouverte veuillez la fermer svp !!!');
