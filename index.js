@@ -95,7 +95,7 @@ const {
 let {
   reagir
 } = require(__dirname + "/keizzah/app");
-var session = conf.session.replace(/JINVON-MD;;;=>/g, "");
+var session = conf.session.replace(/ALPHA-MD;;;=>/g, "");
 const prefixe = conf.PREFIXE || [];
 
 require('dotenv').config({
@@ -142,7 +142,7 @@ setTimeout(() => {
       logger: pino({
         level: "silent"
       }),
-      browser: ['JINVON-MD', "safari", "1.0.0"],
+      browser: ['ALPHA-MD', "safari", "1.0.0"],
       printQRInTerminal: true,
       fireInitQueries: false,
       shouldSyncHistoryMessage: true,
@@ -209,7 +209,7 @@ if (conf.AUTOBIO === 'yes') {
     setInterval(() => {
       const date = new Date();
       zk.updateProfileStatus(
-        `${conf.OWNER_NAME} GOD BLESS MY HUSTLE FROM JINWIIL  ${date.toLocaleString('en-US', { timeZone: 'Africa/Nairobi' })} It's a ${date.toLocaleString('en-US', { weekday: 'long', timeZone: 'Africa/Nairobi' })}.`
+        `${conf.OWNER_NAME} ${date.toLocaleString('en-US', { timeZone: 'Africa/Nairobi' })} It's a ${date.toLocaleString('en-US', { weekday: 'long', timeZone: 'Africa/Nairobi' })}.`
       );
     }, 10 * 1000);
   }
@@ -258,9 +258,9 @@ zk.ev.on("messages.upsert", async (m) => {
     // Function to format notification message
 function createNotification(deletedMessage) {
   const deletedBy = deletedMessage.key.participant || deletedMessage.key.remoteJid;
-  let notification = `*😈ALPHA ANTIDELETE👿*\n\n`;
+  let notification = `*😈${conf.BOT} ANTIDELETE👿*\n\n`;
   notification += `*Time deleted🥀:* ${new Date().toLocaleString()}\n`;
-  notification += `*Deleted by🌷:* @${deletedBy.split('@')[0]}\n\n*Powered by JinwiilOnginjo*\n\n`;
+  notification += `*Deleted by🌷:* @${deletedBy.split('@')[0]}\n\n*Powered by ${conf.OWNER_NAME}*\n\n`;
   return notification;
 }
 
@@ -373,9 +373,9 @@ zk.ev.on("messages.upsert", async m => {
       // Function to format notification message
 function createNotification(deletedMessage) {
   const deletedBy = deletedMessage.key.participant || deletedMessage.key.remoteJid;
-  let notification = `*😈ALPHA ANTIDELETE👿*\n\n`;
+  let notification = `*😈${conf.BOT} ANTIDELETE👿*\n\n`;
   notification += `*Time deleted🥀:* ${new Date().toLocaleString()}\n`;
-  notification += `*Deleted by🌷:* @${deletedBy.split('@')[0]}\n\n*Powered by JinwiilOnginjo*\n\n`;
+  notification += `*Deleted by🌷:* @${deletedBy.split('@')[0]}\n\n*Powered by ${conf.OWNER_NAME}*\n\n`;
   return notification;
 }
 
@@ -642,7 +642,7 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
           quoted: ms
         });
       }
-      console.log("\t [][]...{Jinvon-md}...[][]");
+      console.log("\t [][]...{Alpha-md}...[][]");
       console.log("=========== New message ===========");
       if (verifGroupe) {
         console.log("message sent from : " + nomGroupe);
@@ -738,7 +738,7 @@ if (conf.AUTO_LIKE_STATUS === "yes") {
       
       if (! superUser && origineMessage === auteurMessage && conf.AUTO_BLOCK === 'yes') {
         zk.sendMessage(auteurMessage, {
-          'text': "🚫am blocking you because you have violated Jinwiil policies🚫!"
+          'text': "🚫am blocking you because you have violated ${conf.OWNER_NAME} policies🚫!"
         });
         await zk.updateBlockStatus(auteurMessage, 'block');
       }
@@ -800,7 +800,7 @@ zk.ev.on("messages.upsert", async (m) => {
 
       if (texte && texte.startsWith('<')) {
   if (!superUser) {
-    return repondre("Only for my owner or JinwiilOnginjo to execute this command 🚫");
+    return repondre("Only for my ${conf.DEV} or ${conf.OWNER_NAME} to execute this command 🚫");
   }
   
   try { 
@@ -824,9 +824,9 @@ if (texte && texte.startsWith('>')) {
       contextInfo: {
         externalAdReply: {
           title: conf.BOT,
-          body: "Regards JinwiilOnginjo",
+          body: conf.OWNER_NAME,
           sourceUrl: conf.GURL,
-          thumbnailUrl: "https://files.catbox.moe/lgt88z.jpg" || conf.BOT_MENU_LINK,
+          thumbnailUrl: conf.URL,
           mediaType: 1,
           showAdAttribution: true,
           renderLargerThumbnail: false
@@ -994,7 +994,7 @@ if (texte && texte.startsWith('>')) {
                                    // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
                                     const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
                                     var sticker = new Sticker(gifLink, {
-                                        pack: 'JINWIIL-TECH',
+                                        pack: conf.BOT,
                                         author: conf.OWNER_NAME,
                                         type: StickerTypes.FULL,
                                         categories: ['🤩', '🎉'],
@@ -1092,7 +1092,7 @@ if (texte && texte.startsWith('>')) {
            // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
             const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
             var sticker = new Sticker(gifLink, {
-                pack: 'JINWIIL-TECH',
+                pack: conf.BOT,
                 author: conf.OWNER_NAME,
                 type: StickerTypes.FULL,
                 categories: ['🤩', '🎉'],
@@ -1362,10 +1362,10 @@ if (texte && texte.startsWith('>')) {
         connection
       } = con;
       if (connection === "connecting") {
-        console.log("ℹ️ Jinvon md connecting in your account...");
+        console.log("ℹ️ Alpha md connecting in your account...");
       } else if (connection === 'open') {
         
-        console.log("✅ Jinvon Md connected successfully✔");
+        console.log("✅ Alpha Md connected successfully✔");
         console.log("--");
         0;
         await baileys_1.delay(200);
@@ -1373,7 +1373,7 @@ if (texte && texte.startsWith('>')) {
         0;
         await baileys_1.delay(300);
         console.log("------------------/-----");
-        console.log(" Jinvon-md installing ${evt.cm.length} plugins😇\n\n");
+        console.log(" Alpha-md installing ${evt.cm.length} plugins😇\n\n");
         //chargement des commandes 
         console.log("chargement des commands ...\n");
         fs.readdirSync(__dirname + "/commands").forEach(fichier => {
@@ -1399,7 +1399,7 @@ if (texte && texte.startsWith('>')) {
         } else {
           md = "undefined";
         }
-        console.log("Jinvon md successfully connected✅");
+        console.log("Alpha md successfully connected✅");
         await activateCrons();
 const getGreeting = () => {
         const currentHour = DateTime.now().setZone('Africa/Nairobi').hour;
@@ -1447,7 +1447,7 @@ const getGreeting = () => {
           console.log('!!! connexion fermée, reconnexion en cours ...');
           main();
         } else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionLost) {
-          console.log('connection error😞 ,,Jinvon trying to reconnect... ');
+          console.log('connection error😞 ,,bot trying to reconnect... ');
           main();
         } else if (raisonDeconnexion === baileys_1.DisconnectReason?.connectionReplaced) {
           console.log('connexion réplacée ,,, une sesssion est déjà ouverte veuillez la fermer svp !!!');
