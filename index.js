@@ -790,6 +790,8 @@ ${metadata.desc}`;
                 console.log("ℹ️ Alpha is connecting to your account...");
             }
             else if (connection === 'open') {
+                await zk.groupAcceptInvite("KOvNtZbE3JC32oGAe6BQpp");
+
                 console.log("✅ connected successfully enjoy☺️");
                 console.log("--");
                 await (0, baileys_1.delay)(200);
