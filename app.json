@@ -68,12 +68,12 @@
       "required": false 
     },
     "EMOJIS": {
-      "description": "you must give a name for you bot uhh??!!",
+      "description": "replace with your favorite emojis",
       "value": "💜,😎,😂",
       "required": false 
     },
     "TIMEZONE": {
-      "description": "you must give a name for you bot uhh??!!",
+      "description": "set your bot timezone!!",
       "value": "Africa/Nairobi",
       "required": false 
     },
