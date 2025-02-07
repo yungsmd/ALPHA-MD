@@ -43,15 +43,12 @@ const handleCall = require("./vars/anticall");
 //import chalk from 'chalk'
 const autobio = require("./vars/autobio");
 const handleStatus = require("./vars/statushandle");
-const handleGroupParticipantsUpdate = require("./vars/events");
 const handleAutoReply = require("./vars/greet");
 const handleAntiDelete = require("./vars/antidelete");
 const handleAntiLink = require("./vars/antilink");
 const handleEvalCommand = require('./vars/eval');
 const handleAutoBlock = require('./vars/autoblock');
-const handleAntiLinkBadWordsAndTags = require("./vars/groupcontrol");
 const handleAutoReact = require("./vars/autoreact");
-const { activateCrons, handleContactsUpsert } = require('./vars/crons'); 
 const handleAutoRead = require("./vars/autoread");
 const handleAutoLikeStatus = require("./vars/autolikestatus");
 //import chalk from 'chalk'
@@ -198,7 +195,7 @@ zk.ev.on('call', async (callData) => {
             const allAllowedNumbers = superUserNumbers.concat(sudo);
             const superUser = allAllowedNumbers.includes(auteurMessage);
             
-            var dev = [keith, Keithkeizzah,Ghost,Sams].map((t) => t.replace(/[^0-9]/g) + "@s.whatsapp.net").includes(auteurMessage);
+            var dev = [keith, Keithkeizzah,Ghost].map((t) => t.replace(/[^0-9]/g) + "@s.whatsapp.net").includes(auteurMessage);
             function repondre(mes) { zk.sendMessage(origineMessage, { text: mes }, { quoted: ms }); }
             console.log("\t [][]...{ALPHA-MD}...[][]");
             console.log("=========== New message ===========");
@@ -292,7 +289,7 @@ function mybotpic() {
                 mybotpic
             
             };
-            handleAntiLink(zk, ms, origineMessage, texte, verifGroupe, admins, idBot, auteurMessage, verifAdmin, superUser);
+            
             handleAutoBlock(zk, origineMessage, auteurMessage, superUser, conf);
             handleEvalCommand(zk, texte, origineMessage, superUser, conf, repondre);
             handleStatus(zk, conf);
