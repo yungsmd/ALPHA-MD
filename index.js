@@ -66,7 +66,7 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 9090;
 
-// Serve static files from the 'public' directory
+// Serve static files from the 'public' directo
 app.use(express.static(path.join(__dirname, 'public')));
 
 
