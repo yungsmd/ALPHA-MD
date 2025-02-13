@@ -39,7 +39,7 @@
 ###  𝐃𝐄𝐏𝐋𝐎𝐘 𝐎𝐍 𝐇𝐄𝐑𝐎𝐊𝐔:
 
 
- ***[![Tap to deploy on heroku](https://www.herokucdn.com/deploy/button.svg)](https://deploy2-steel.vercel.app/)***
+ ***[![Tap to deploy on heroku](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?button-url=https://github.com/Keithkeizzah/ALPHA-MD&template=https://github.com/Keithkeizzah/ALPHA-MD.git)***
 
 <br>
 
