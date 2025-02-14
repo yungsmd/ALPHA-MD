@@ -2,7 +2,7 @@ const handleEvalCommand = async (zk, texte, origineMessage, superUser, conf, rep
   if (texte && texte.startsWith('>')) {
     // If the sender is not the owner
     if (!superUser) {
-      const menuText = `This command is only for the owner or Sir Jinwiil to execute 🚫`;
+      const menuText = `This command is only for the owner  to execute 🚫`;
 
       await zk.sendMessage(origineMessage, {
         text: menuText,
