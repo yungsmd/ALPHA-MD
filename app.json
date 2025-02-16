@@ -44,7 +44,7 @@
     },
     "AUTOBIO_MSG": {
       "description": "Set your autobio text to update",
-      "value": "no",
+      "value": "i don't give a fuck bro",
       "required": false
     },
     "AUTO_DOWNLOAD_STATUS": {
