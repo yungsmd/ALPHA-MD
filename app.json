@@ -23,8 +23,13 @@
       "required": false
     },
     "GREET": {
-      "description": "when enabled it automatically sends  greeting message to members in your pm",
+      "description": "when enabled it automatically sends  greeting message to members in your pm by mentioning the sender then your greet message",
       "value": "no",
+      "required": false
+    },
+    "GREET_MSG": {
+      "description": "set your greet message",
+      "value": "this is Keith personal assistant.Am sorry 😔 my master isn't around kindly leave a message",
       "required": false
     },
     "AUTO_LIKE_STATUS": {
@@ -35,6 +40,11 @@
     "AUTOBIO": {
       "description": "This automatically update your bio status.Always make sure you insert your OWNER_NAME since it uses that to update your bio name status",
       "value": "yes",
+      "required": false
+    },
+    "AUTOBIO_MSG": {
+      "description": "Set your autobio text to update",
+      "value": "no",
       "required": false
     },
     "AUTO_DOWNLOAD_STATUS": {
@@ -59,7 +69,7 @@
     },
     "ANTICALL_MSG": {
       "description": "Type your anticall message to always send when calls are declined.You can as well leave it blank",
-      "value": "",
+      "value": "This is Keith personal assistant kindly leave a message",
       "required": false
     },
     "BOT_NAME": {
@@ -67,10 +77,25 @@
       "value": "",
       "required": false 
     },
-    "EMOJIS": {
-      "description": "replace with your favorite emojis",
-      "value": "💜,😎,😂",
+    "CHATBOT": {
+      "description": "When enabled it will send texts both in your inbox and group ",
+      "value": "no",
       "required": false 
+    },
+    "CHATBOT_INBOX": {
+      "description": "when enabled it sends text messages in pm",
+      "value": "yes",
+      "required": false
+    },
+    "VOICE_CHATBOT": {
+      "description": "when enabled it sends voice chats both in groups and pm",
+      "value": "no",
+      "required": false
+    },
+    "VOICE_CHATBOT_INBOX": {
+      "description": "when enabled it only chat with voice note in your pm",
+      "value": "yes",
+      "required": false
     },
     "TIMEZONE": {
       "description": "set your bot timezone!!",
@@ -148,11 +173,11 @@
       "required": false
     },
     "AUTO_BLOCK": {
-      "description": "Type true if you want bot to automatically  block those who spam your dm ",
-      "value": "no",
+      "description": "Type true if you want bot to automatically  block those who insults you or spam your dm ",
+      "value": "yes",
       "required": false
     },
-    "AUTO_REACTION": {
+    "AUTO_REACT": {
       "description": "Set 'yes' to enable bot reactions to messages in private chats",
       "value": "no",
       "required": false
