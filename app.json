@@ -87,6 +87,11 @@
       "value": "yes",
       "required": false
     },
+    "AUTO_REACT": {
+      "description": "if you want your bot to react tp messages ",
+      "value": "yes",
+      "required": false
+    },   
     "VOICE_CHATBOT": {
       "description": "when enabled it sends voice chats both in groups and pm",
       "value": "no",
