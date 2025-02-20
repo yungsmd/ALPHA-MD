@@ -62,7 +62,7 @@ module.exports = { session: process.env.SESSION_ID || 'keith',
      protocol: 'postgres',
      dialectOptions: {
          native: true,
-         ssl: { require: true, rejectUnauthorized: false },
+         ssl: { require: true rejectUnauthorized: false },
      },
      logging: false,
 }),*/
