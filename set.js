@@ -29,7 +29,7 @@ module.exports = { session: process.env.SESSION_ID || 'keith',
     GREET : process.env.GREET || "no", 
     VOICE_CHATBOT: process.env.VOICE_CHATBOT || 'no',
     VOICE_CHATBOT_INBOX: process.env.VOICE_CHATBOT_INBOX || 'yes',
-    TIMEZONE : process.env.TIMEZONE || "America/Chicago",              
+              
     AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || 'viewed by alpha md',   
     AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || 'no',
     AUTOBIO: process.env.AUTOBIO || 'yes',       
