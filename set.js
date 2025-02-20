@@ -30,7 +30,7 @@ module.exports = { session: process.env.SESSION_ID || 'keith',
     VOICE_CHATBOT: process.env.VOICE_CHATBOT || 'no',
     VOICE_CHATBOT_INBOX: process.env.VOICE_CHATBOT_INBOX || 'yes',
               
-    AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || 'viewed by alpha md',   
+    AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || 'viewed by alpha',   
     AUTO_STATUS_REPLY: process.env.AUTO_STATUS_REPLY || 'no',
     AUTOBIO: process.env.AUTOBIO || 'yes',       
     ANTICALL_MSG : process.env.ANTICALL_MSG || 'call declined',             
