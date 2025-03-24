@@ -27,6 +27,11 @@
       "value": "no",
       "required": false
     },
+    "EVENTS": {
+      "description": "If you want bot to send welcome and goodbye texts",
+      "value": "no",
+      "required": false
+    },
     "GREET_MSG": {
       "description": "set your greet message",
       "value": "this is Keith personal assistant.Am sorry 😔 my master isn't around kindly leave a message",
