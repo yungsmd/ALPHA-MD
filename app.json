@@ -14,13 +14,13 @@
   "env": {
     "PREFIX": {
       "description": "Choose your bot's prefix",
-      "value": ".",
+      "value": " ",
       "required": true
     },
     "AUTO_READ_STATUS": {
       "description": "Your contact status will be read automatically (type 'yes' to activate or 'no' to deactivate; don't write in capital letters)",
       "value": "yes",
-      "required": false
+      "required": true
     },
     "GREET": {
       "description": "when enabled it automatically sends  greeting message to members in your pm by mentioning the sender then your greet message",
@@ -40,7 +40,7 @@
     "AUTO_LIKE_STATUS": {
       "description": "Your contact status will be liked automatically (type 'yes' to activate or 'no' to deactivate; don't write in capital letters)",
       "value": "yes",
-      "required": false
+      "required": true
     },
     "AUTOBIO": {
       "description": "This automatically update your bio status.Always make sure you insert your OWNER_NAME since it uses that to update your bio name status",
@@ -79,8 +79,8 @@
     },
     "BOT_NAME": {
       "description": "you must give a name for you bot uhh??!!",
-      "value": "",
-      "required": false 
+      "value": "smdsam",
+      "required": true 
     },
     "CHATBOT": {
       "description": "When enabled it will send texts both in your inbox and group ",
@@ -115,7 +115,7 @@
     "GROUP_CONTROL": {
       "description": "urs if you want bot yo control group features such as antilink,antispam,antibad",
       "value": "yes",
-      "required": false
+      "required": true
     },
     "PUBLIC_MODE": {
       "description": "Set 'yes' to make your bot public or 'no' to keep it private",
@@ -134,13 +134,13 @@
     },
     "SESSION_ID": {
       "description": "Enter your session ID, the code you receive after scanning the QR code",
-      "value": "",
+      "value": "KEITH;;;H4sIAAAAAAAAA61Vy46jRhT9l9raneb9sNRSAAO2MaZtg19RFmUooGxehgIbj/wLWWc3m2zyd/mEiHa3uqXMTDpSWJWKqnPPvffcU19AluMKWagFgy+gKHEDCeqWpC0QGAC1DkNUgj4IIIFgAMaai+Jn01UJXU+p0WG9KQvRCbnFfow3LKWqaejMpw21XUVP4NYHRb1PsP8DQCvzeDJqHON0IIdZYsSx2jweL/MxDZdmdY6vvfDULqTzGHNP4NYhQlziLNKLGKWohImF2meIy8/Rz82DQdhla6x5WLlOTCnJdXdiuQWtVjUfNJdkO33syXDF5J+jv8dikGLhMF46m+epfl3E5OB6+YyKrsRMp2RxIG1h4IvuvdKvcJShYBygjGDSfrruaFqVuYpCW+6NlwyfxoJ/5pXFuq7NS6QL0VlfqQeJiVer7eeIywua3sp2mewFYbI5u7OTVdSLdSO5rD4uq+FaHOqMmq+Pqf2R+HP5ppXjf6m7YLqn7FDVtb2hTEl2euEFPltrLqVmo6AZXZVDrUOh9Qqj+mTdhXNuOVlOq87myllTfoF1ejPiK87XSwdnzzNlODa8+frivdOHpC5/qI5qbS5rk/Em25BYlZ4784uU7yJhGY8WjlDS7YR19no9dMTJFouSHu2p0UKdH3x2vhyVTWWj2ZYrnOtMLMaUF0pOvYqUp5eMjqgdB2BA3/qgRBGuSAkJzrNujxf6AAbNEvklIi/VBZSpO3PLltXH+LK3LM3NKPo5ObeWl62PVRZOZWNZmJvG7uVPoA+KMvdRVaFghCuSl62NqgpGqAKDX14a1eVcojQnaIIDMAAMz4mCJAg8x3M/Vz+dY0gqWBQ/ZYiAPgjLPLURGJCyRn3wcoGXZUFhZJHWOX3IqDxlqOpQ1mljyBmSTEtdhuk9qItTVBGYFmBAixzLMoLMybf+/8ODoyiGkVlZY4aCJtGGyrOGxOiCQmmcTIv6j3mI7O3XPsjQhdxl3BWfpfsgxGVFvKwukhwGbxp/+wl9P68zsmwzX+sWqASDD9uIEJxFVZdZncHSj3GDtC4PMAhhUqFbHwSowT7q8IAZqafUnRlL7sHdbLBbe7R2iLoOxnl2P0JzvMQzIvsQcpL8wO1D5kHaI+7B5ykYCoilOYoCXTnuDtLd+a6go5i3V/sIaqaWugszzrA6HdPLUeNIL6K8KxGVKHir8h76x7pw8yPKfoC71s5ndJhv1DBUVTuxKY+MFR87axh9wL0rHAy+vLu2lgcdnqZPNMVabkHXrS7OP9Qw4Jl/CiKD3WngJDWJ0V9ff//tr69//NnFe21GhxQgAnFSdUFmNZc5vqrbp6CYSqapbCNFixTw3rw3T7gPnZHSs30yn1yrxbBy1JSebRKuyCaPx6kY4q1moqu9DuNW9JSnb4CAAUivnunjs1Lu1NUENpxMXORvdmXEhMbwlD8j6phzzWk355WefS0oPjybizEns5UGfd1u4qwZtTPHPKVn8dDqe8TImTZ/6qLdRfQx2FBlLzmmzntpAYXIs6Ne1GtgaS2ztGmtbOnU0B+vrNVxusVy/binNhdVTca5yDvpbDV0fKtkmL2NSngq1uIw1byDF8/vbvXilsnrK4VfjeQuuRCjF9N/bca/Nu1d/dSt/wHj9Rn5jsLUxY64a97TfFGfi8NoR9wVj6xdG/Jaj+VSJc6qq5Fxfk0r4NaNdZFAEuZlCgYAZkGZ4wD0QQIrorwP8Dc8geX7IG2VolgSSN7mHijdN9V24PY3XhbnVSEJAAA=",
       "required": true
     },
     "OWNER_NAME": {
       "description": "don't you have a name bro.Insert your name here!!",
-      "value": "",
-      "required": false
+      "value": "oluthe",
+      "required": true
     },
     "URL": {
       "description": "you must add your bot image url.Get your image url now and fill it here",
@@ -154,12 +154,12 @@
     },
     "NUMERO_OWNER": {
       "description": "Your phone number (exclude '+' and area code, e.g., '254796299159')",
-      "value": "254796299159",
+      "value": "254768665454",
       "required": false
     },
     "WARN_COUNT": {
       "description": "Set the warning limit for warning commands",
-      "value": "3",
+      "value": "1",
       "required": false
     },
     "STARTING_BOT_MESSAGE": {
@@ -169,8 +169,8 @@
     },
     "PRESENCE": {
       "description": "Mark your presence: 1 for online, 2 for typing, 3 for recording, or leave blank for real state",
-      "value": "",
-      "required": false
+      "value": "1",
+      "required": true
     },
     "ANTI_DELETE_MESSAGE": {
       "description": "Enable anti-delete message (set 'yes' to activate or 'no' to deactivate)",
